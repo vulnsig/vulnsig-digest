@@ -1,6 +1,6 @@
 import type { ScheduledEvent } from "aws-lambda";
 import { fetchDigestData } from "./data/fetchFeeds.js";
-import { deduplicateByVector } from "./data/deduplicate.js";
+import { curateCves } from "./curation/index.js";
 import { sendDigest } from "./send/postmark.js";
 
 function requireEnv(name: string): string {
@@ -25,14 +25,24 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
     return;
   }
 
-  console.log("Fetching CVE and KEV feeds...");
-  const data = await fetchDigestData(cveUrl, kevUrl);
+  const cveWindowHours = parseInt(process.env.CVE_WINDOW_HOURS ?? "24", 10);
+  const kevWindowDays = parseInt(process.env.KEV_WINDOW_DAYS ?? "7", 10);
 
-  const dedupedCves = deduplicateByVector(data.cves);
-  console.log(
-    `CVEs: ${data.cves.length} raw → ${dedupedCves.length} after dedup`,
+  console.log("Fetching CVE and KEV feeds...");
+  const data = await fetchDigestData(
+    cveUrl,
+    kevUrl,
+    cveWindowHours,
+    kevWindowDays,
   );
-  console.log(`KEVs: ${data.kevs.length}`);
+  console.log(`CVEs: ${data.cves.length} raw, KEVs: ${data.kevs.length}`);
+
+  console.log("Curating CVEs...");
+  const curation = await curateCves(data.cves);
+  console.log(
+    `Curated: ${curation.curated.length} products from ${curation.totalProductsFound} found` +
+      (curation.curatedWithLlm ? "" : " (fallback)"),
+  );
 
   const date = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -45,7 +55,7 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
     postmarkToken,
     from,
     recipients,
-    props: { date, cves: dedupedCves, kevs: data.kevs, glyphBaseUrl },
+    props: { date, curation, kevs: data.kevs, glyphBaseUrl },
   });
 
   console.log(`Sent: ${result.sent}/${result.total}, Failed: ${result.failed}`);

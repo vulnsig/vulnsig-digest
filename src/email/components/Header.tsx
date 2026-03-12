@@ -47,5 +47,4 @@ const digest: React.CSSProperties = {
   fontSize: 11,
   margin: `${spacing.sm}px 0 0`,
   letterSpacing: "0.08em",
-  textTransform: "uppercase" as const,
 };

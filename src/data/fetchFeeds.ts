@@ -10,14 +10,12 @@ export async function fetchFeed(url: string): Promise<CveDataset> {
   return (await res.json()) as CveDataset;
 }
 
-/** Select the N most recently published entries. */
-export function selectRecent(entries: CveEntry[], count: number): CveEntry[] {
-  return [...entries]
-    .sort(
-      (a, b) =>
-        new Date(b.published).getTime() - new Date(a.published).getTime(),
-    )
-    .slice(0, count);
+/** Returns all entries published at or after `cutoff`. */
+export function selectWithinWindow(
+  entries: CveEntry[],
+  cutoff: Date,
+): CveEntry[] {
+  return entries.filter((e) => new Date(e.published) >= cutoff);
 }
 
 export interface DigestData {
@@ -29,15 +27,21 @@ export interface DigestData {
 export async function fetchDigestData(
   cveUrl: string,
   kevUrl: string,
+  cveWindowHours = 24,
+  kevWindowDays = 7,
 ): Promise<DigestData> {
   const [cveFeed, kevFeed] = await Promise.all([
     fetchFeed(cveUrl),
     fetchFeed(kevUrl),
   ]);
 
+  const now = Date.now();
+  const cveCutoff = new Date(now - cveWindowHours * 60 * 60 * 1000);
+  const kevCutoff = new Date(now - kevWindowDays * 24 * 60 * 60 * 1000);
+
   return {
-    cves: selectRecent(cveFeed.cves, 20),
-    kevs: selectRecent(kevFeed.cves, 5),
+    cves: selectWithinWindow(cveFeed.cves, cveCutoff),
+    kevs: selectWithinWindow(kevFeed.cves, kevCutoff),
     generatedAt: cveFeed.generatedAt,
   };
 }

@@ -17,3 +17,17 @@ export interface CveDataset {
 }
 
 export type SeverityLevel = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | "NONE";
+
+export interface CuratedCve {
+  product: string;
+  representative: CveEntry;
+  related: CveEntry[];
+}
+
+export interface CurationResult {
+  curated: CuratedCve[];
+  summary: string;
+  totalCvesInFeed: number;
+  totalProductsFound: number;
+  curatedWithLlm: boolean;
+}

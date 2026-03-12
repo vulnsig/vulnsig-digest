@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { deduplicateByVector } from "../src/data/deduplicate.js";
-import { selectRecent } from "../src/data/fetchFeeds.js";
+import { selectWithinWindow } from "../src/data/fetchFeeds.js";
 import { glyphUrl } from "../src/data/glyph.js";
 import type { CveEntry } from "../src/data/types.js";
 import sampleCves from "./fixtures/sample-cves.json";
@@ -28,18 +28,32 @@ describe("deduplicateByVector", () => {
   });
 });
 
-describe("selectRecent", () => {
-  it("returns the N most recent entries sorted by published date", () => {
-    const result = selectRecent(entries, 3);
-    expect(result.length).toBe(3);
-    expect(result[0].id).toBe("CVE-2026-10001");
-    expect(result[1].id).toBe("CVE-2026-10002");
-    expect(result[2].id).toBe("CVE-2026-10003");
+describe("selectWithinWindow", () => {
+  it("returns entries published at or after the cutoff", () => {
+    // cutoff at 08:45Z — includes 09:00, 09:30, 10:00 (3 entries)
+    const cutoff = new Date("2026-03-11T08:45:00Z");
+    const result = selectWithinWindow(entries, cutoff);
+    expect(result.map((e) => e.id)).toEqual([
+      "CVE-2026-10001",
+      "CVE-2026-10002",
+      "CVE-2026-10003",
+    ]);
   });
 
-  it("returns all entries when count exceeds array length", () => {
-    const result = selectRecent(entries, 100);
-    expect(result.length).toBe(entries.length);
+  it("includes entries published exactly at the cutoff", () => {
+    const cutoff = new Date("2026-03-11T08:00:00Z");
+    const result = selectWithinWindow(entries, cutoff);
+    expect(result.map((e) => e.id)).toContain("CVE-2026-10005");
+  });
+
+  it("returns all entries when cutoff is before all published dates", () => {
+    const cutoff = new Date("2026-03-01T00:00:00Z");
+    expect(selectWithinWindow(entries, cutoff).length).toBe(entries.length);
+  });
+
+  it("returns no entries when cutoff is after all published dates", () => {
+    const cutoff = new Date("2026-03-12T00:00:00Z");
+    expect(selectWithinWindow(entries, cutoff).length).toBe(0);
   });
 });
 

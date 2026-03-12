@@ -1,7 +1,8 @@
 import { Body, Container, Head, Html, Preview } from "@react-email/components";
 import { Tailwind } from "@react-email/tailwind";
-import type { CveEntry } from "../data/types.js";
+import type { CveEntry, CurationResult } from "../data/types.js";
 import { Header } from "./components/Header.js";
+import { SummarySection } from "./components/SummarySection.js";
 import { KevSection } from "./components/KevSection.js";
 import { CveSection } from "./components/CveSection.js";
 import { Footer } from "./components/Footer.js";
@@ -9,18 +10,18 @@ import { colors, fonts } from "./styles.js";
 
 export interface DigestEmailProps {
   date: string;
-  cves: CveEntry[];
+  curation: CurationResult;
   kevs: CveEntry[];
   glyphBaseUrl: string;
 }
 
 export function DigestEmail({
   date,
-  cves,
+  curation,
   kevs,
   glyphBaseUrl,
 }: DigestEmailProps) {
-  const previewText = `${cves.length} new CVEs, ${kevs.length} KEV additions — ${date}`;
+  const previewText = `${curation.curated.length} products from ${curation.totalCvesInFeed} CVEs, ${kevs.length} KEV additions — ${date}`;
 
   return (
     <Html>
@@ -30,8 +31,15 @@ export function DigestEmail({
         <Body style={body}>
           <Container style={container}>
             <Header date={date} />
+            <SummarySection
+              summary={curation.summary}
+              curatedWithLlm={curation.curatedWithLlm}
+            />
             <KevSection entries={kevs} glyphBaseUrl={glyphBaseUrl} />
-            <CveSection entries={cves} glyphBaseUrl={glyphBaseUrl} />
+            <CveSection
+              curated={curation.curated}
+              glyphBaseUrl={glyphBaseUrl}
+            />
             <Footer />
           </Container>
         </Body>

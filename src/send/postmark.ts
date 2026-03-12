@@ -17,7 +17,7 @@ export async function sendDigest({
 }: SendOptions) {
   const client = new ServerClient(postmarkToken);
   const html = await render(DigestEmail(props));
-  const subject = `VulnSig Daily — ${props.cves.length} new CVEs, ${props.kevs.length} KEV additions — ${props.date}`;
+  const subject = `VulnSig Daily — ${props.curation.totalCvesInFeed} new CVEs, ${props.kevs.length} KEV additions — ${props.date}`;
 
   const results = await Promise.allSettled(
     recipients.map((to) =>
