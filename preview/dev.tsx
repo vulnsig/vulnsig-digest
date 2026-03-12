@@ -1,9 +1,20 @@
 import "dotenv/config";
+import { Blob } from "node:buffer";
+// Set Blob synchronously at module load (safe — node:buffer requires no globals).
+// FormData and fetch are set inside Preview via dynamic import, which runs after
+// this assignment and thus after undici's own Blob dependency is satisfied.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(globalThis as any).Blob = Blob;
+
 import { DigestEmail } from "../src/email/DigestEmail.js";
 import { fetchDigestData } from "../src/data/fetchFeeds.js";
 import { curateCves } from "../src/curation/index.js";
 
 export default async function Preview() {
+  // Dynamic import ensures undici loads after globalThis.Blob is set above.
+  const { FormData, fetch } = await import("undici");
+  Object.assign(globalThis, { FormData, fetch });
+
   const cveUrl = process.env.CVE_DATA_URL!;
   const kevUrl = process.env.KEV_DATA_URL!;
   const glyphBaseUrl =

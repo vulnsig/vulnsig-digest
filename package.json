@@ -7,6 +7,7 @@
     "dev": "email dev -d preview -p 3000",
     "build": "tsup src/handler.ts --format esm --target node20 --out-dir dist --clean",
     "package": "npm run build && cd dist && zip -r ../vulnsig-digest.zip .",
+    "curate-debug": "tsx src/curate-debug.ts",
     "send-test": "tsx src/send-test.ts",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -32,6 +33,7 @@
     "tsup": "^8.3.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
+    "undici": "^7.24.0",
     "vitest": "^3.0.0"
   }
 }

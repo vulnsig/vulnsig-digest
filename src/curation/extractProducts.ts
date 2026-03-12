@@ -5,7 +5,7 @@ import {
   buildExtractionUserPrompt,
 } from "./prompts.js";
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 20;
 const MAX_PARALLEL = 3;
 
 type Annotated = CveEntry & { product: string };
@@ -55,7 +55,7 @@ async function extractBatch(
   const attempt = async () =>
     client.messages.create({
       model: "claude-sonnet-4-20250514",
-      max_tokens: 512,
+      max_tokens: 1024,
       system: [
         {
           type: "text",
