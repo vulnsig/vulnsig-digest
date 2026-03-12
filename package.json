@@ -1,0 +1,31 @@
+{
+  "name": "vulnsig-digest",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "email dev -d preview -p 3000",
+    "build": "tsup src/handler.ts --format esm --target node20 --out-dir dist --clean",
+    "package": "npm run build && cd dist && zip -r ../vulnsig-digest.zip .",
+    "send-test": "tsx src/send-test.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.0.31",
+    "@react-email/render": "^1.0.3",
+    "postmark": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^20.17.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "react-email": "^3.0.0",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "dotenv": "^16.4.0",
+    "vitest": "^3.0.0"
+  }
+}

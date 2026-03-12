@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-03-11T12:00:00Z",
+  "windowStart": "2026-03-10T12:00:00Z",
+  "windowEnd": "2026-03-11T12:00:00Z",
+  "cves": [
+    {
+      "id": "CVE-2026-10001",
+      "published": "2026-03-11T10:00:00Z",
+      "description": "A critical remote code execution vulnerability in ExampleCorp WebServer allows unauthenticated attackers to execute arbitrary commands via crafted HTTP requests to the management interface.",
+      "cvss": {
+        "version": "3.1",
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "baseScore": 9.8
+      }
+    },
+    {
+      "id": "CVE-2026-10002",
+      "published": "2026-03-11T09:30:00Z",
+      "description": "SQL injection vulnerability in Acme CRM application allows authenticated users to extract sensitive data from the backend database through specially crafted search queries.",
+      "cvss": {
+        "version": "3.1",
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "baseScore": 8.1
+      }
+    },
+    {
+      "id": "CVE-2026-10003",
+      "published": "2026-03-11T09:00:00Z",
+      "description": "Cross-site scripting (XSS) vulnerability in WidgetLib dashboard component allows attackers to inject malicious scripts via the search parameter.",
+      "cvss": {
+        "version": "3.1",
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "baseScore": 6.1
+      }
+    },
+    {
+      "id": "CVE-2026-10004",
+      "published": "2026-03-11T08:30:00Z",
+      "description": "Duplicate vector entry — same vector as CVE-2026-10001 to test deduplication. Buffer overflow in FooCorp Router firmware.",
+      "cvss": {
+        "version": "3.1",
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "baseScore": 9.8
+      }
+    },
+    {
+      "id": "CVE-2026-10005",
+      "published": "2026-03-11T08:00:00Z",
+      "description": "Information disclosure in CloudSync API allows unauthenticated users to enumerate valid usernames through timing differences in login responses.",
+      "cvss": {
+        "version": "3.1",
+        "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "baseScore": 3.7
+      }
+    }
+  ]
+}
