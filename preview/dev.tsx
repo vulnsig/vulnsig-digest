@@ -1,10 +1,10 @@
 import "dotenv/config";
-import { Blob } from "node:buffer";
-// Set Blob synchronously at module load (safe — node:buffer requires no globals).
+import { Blob, File } from "node:buffer";
+// Set Blob and File synchronously at module load (safe — node:buffer requires no globals).
 // FormData and fetch are set inside Preview via dynamic import, which runs after
-// this assignment and thus after undici's own Blob dependency is satisfied.
+// this assignment and thus after undici's own Blob/File dependency is satisfied.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(globalThis as any).Blob = Blob;
+Object.assign(globalThis as any, { Blob, File });
 
 import { DigestEmail } from "../src/email/DigestEmail.js";
 import { fetchDigestData } from "../src/data/fetchFeeds.js";
