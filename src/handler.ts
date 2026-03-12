@@ -14,7 +14,10 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const kevUrl = requireEnv("KEV_DATA_URL");
   const postmarkToken = requireEnv("POSTMARK_SERVER_TOKEN");
   const from = requireEnv("FROM_EMAIL");
-  const recipients = requireEnv("RECIPIENTS").split(",").map((s) => s.trim()).filter(Boolean);
+  const recipients = requireEnv("RECIPIENTS")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
   const glyphBaseUrl = requireEnv("GLYPH_BASE_URL");
 
   if (recipients.length === 0) {
@@ -26,7 +29,9 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const data = await fetchDigestData(cveUrl, kevUrl);
 
   const dedupedCves = deduplicateByVector(data.cves);
-  console.log(`CVEs: ${data.cves.length} raw → ${dedupedCves.length} after dedup`);
+  console.log(
+    `CVEs: ${data.cves.length} raw → ${dedupedCves.length} after dedup`,
+  );
   console.log(`KEVs: ${data.kevs.length}`);
 
   const date = new Date().toLocaleDateString("en-US", {

@@ -8,10 +8,20 @@ async function main() {
   const kevUrl = process.env.KEV_DATA_URL;
   const postmarkToken = process.env.POSTMARK_SERVER_TOKEN;
   const from = process.env.FROM_EMAIL;
-  const recipients = (process.env.RECIPIENTS ?? "").split(",").map((s) => s.trim()).filter(Boolean);
-  const glyphBaseUrl = process.env.GLYPH_BASE_URL ?? "https://vulnsig.io/api/png";
+  const recipients = (process.env.RECIPIENTS ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const glyphBaseUrl =
+    process.env.GLYPH_BASE_URL ?? "https://vulnsig.io/api/png";
 
-  if (!cveUrl || !kevUrl || !postmarkToken || !from || recipients.length === 0) {
+  if (
+    !cveUrl ||
+    !kevUrl ||
+    !postmarkToken ||
+    !from ||
+    recipients.length === 0
+  ) {
     console.error("Missing required env vars. See .env.example");
     process.exit(1);
   }

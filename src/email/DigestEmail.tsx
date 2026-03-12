@@ -1,10 +1,4 @@
-import {
-  Body,
-  Container,
-  Head,
-  Html,
-  Preview,
-} from "@react-email/components";
+import { Body, Container, Head, Html, Preview } from "@react-email/components";
 import type { CveEntry } from "../data/types.js";
 import { Header } from "./components/Header.js";
 import { KevSection } from "./components/KevSection.js";
@@ -19,7 +13,12 @@ export interface DigestEmailProps {
   glyphBaseUrl: string;
 }
 
-export function DigestEmail({ date, cves, kevs, glyphBaseUrl }: DigestEmailProps) {
+export function DigestEmail({
+  date,
+  cves,
+  kevs,
+  glyphBaseUrl,
+}: DigestEmailProps) {
   const previewText = `${cves.length} new CVEs, ${kevs.length} KEV additions — ${date}`;
 
   return (

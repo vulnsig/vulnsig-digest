@@ -1,11 +1,11 @@
 {
   "generatedAt": "2026-03-11T12:00:00Z",
-  "windowStart": "2026-03-10T12:00:00Z",
-  "windowEnd": "2026-03-11T12:00:00Z",
+  "windowStart": "2026-03-10",
+  "windowEnd": "2026-03-11",
   "cves": [
     {
       "id": "CVE-2026-20001",
-      "published": "2026-03-11T06:00:00Z",
+      "published": "2026-03-11",
       "description": "Actively exploited authentication bypass in MegaCorp VPN Gateway allows remote attackers to access internal networks without valid credentials.",
       "cvss": {
         "version": "3.1",
@@ -15,7 +15,7 @@
     },
     {
       "id": "CVE-2026-20002",
-      "published": "2026-03-10T22:00:00Z",
+      "published": "2026-03-10",
       "description": "Privilege escalation in SuperOS kernel allows local users to gain root access through a race condition in the process scheduler.",
       "cvss": {
         "version": "3.1",

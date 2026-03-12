@@ -9,7 +9,8 @@
     "package": "npm run build && cd dist && zip -r ../vulnsig-digest.zip .",
     "send-test": "tsx src/send-test.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@react-email/components": "^0.0.31",
@@ -20,12 +21,13 @@
     "@types/aws-lambda": "^8.10.145",
     "@types/node": "^20.17.0",
     "@types/react": "^19.0.0",
+    "dotenv": "^16.4.0",
+    "prettier": "^3.8.1",
     "react": "^19.0.0",
     "react-email": "^3.0.0",
     "tsup": "^8.3.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
-    "dotenv": "^16.4.0",
     "vitest": "^3.0.0"
   }
 }

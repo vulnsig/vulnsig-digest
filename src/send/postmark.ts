@@ -9,7 +9,12 @@ export interface SendOptions {
   props: DigestEmailProps;
 }
 
-export async function sendDigest({ postmarkToken, from, recipients, props }: SendOptions) {
+export async function sendDigest({
+  postmarkToken,
+  from,
+  recipients,
+  props,
+}: SendOptions) {
   const client = new ServerClient(postmarkToken);
   const html = await render(DigestEmail(props));
   const subject = `VulnSig Daily — ${props.cves.length} new CVEs, ${props.kevs.length} KEV additions — ${props.date}`;
@@ -28,7 +33,9 @@ export async function sendDigest({ postmarkToken, from, recipients, props }: Sen
 
   const failures = results.filter((r) => r.status === "rejected");
   if (failures.length > 0) {
-    console.error(`Failed to send to ${failures.length}/${recipients.length} recipients`);
+    console.error(
+      `Failed to send to ${failures.length}/${recipients.length} recipients`,
+    );
     for (const f of failures) {
       console.error((f as PromiseRejectedResult).reason);
     }
