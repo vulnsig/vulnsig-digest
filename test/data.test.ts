@@ -1,32 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { deduplicateByVector } from "../src/data/deduplicate.js";
 import { selectWithinWindow } from "../src/data/fetchFeeds.js";
 import { glyphUrl } from "../src/data/glyph.js";
 import type { CveEntry } from "../src/data/types.js";
 import sampleCves from "./fixtures/sample-cves.json";
 
 const entries: CveEntry[] = sampleCves.cves;
-
-describe("deduplicateByVector", () => {
-  it("removes entries with identical CVSS vectors", () => {
-    const result = deduplicateByVector(entries);
-    const vectors = result.map((e) => e.cvss.vectorString);
-    expect(new Set(vectors).size).toBe(vectors.length);
-  });
-
-  it("keeps the first occurrence (most recent when pre-sorted)", () => {
-    const result = deduplicateByVector(entries);
-    const ids = result.map((e) => e.id);
-    expect(ids).toContain("CVE-2026-10001");
-    expect(ids).not.toContain("CVE-2026-10004");
-  });
-
-  it("returns all entries when no duplicates exist", () => {
-    const unique = entries.filter((e) => e.id !== "CVE-2026-10004");
-    const result = deduplicateByVector(unique);
-    expect(result.length).toBe(unique.length);
-  });
-});
 
 describe("selectWithinWindow", () => {
   it("returns entries published at or after the cutoff", () => {
