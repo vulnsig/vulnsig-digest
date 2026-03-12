@@ -1,17 +1,27 @@
 import "dotenv/config";
 import { Blob, File } from "node:buffer";
-// Set Blob and File synchronously at module load (safe — node:buffer requires no globals).
-// FormData and fetch are set inside Preview via dynamic import, which runs after
-// this assignment and thus after undici's own Blob/File dependency is satisfied.
+import { MessageChannel, MessagePort } from "node:worker_threads";
+import { ReadableStream, WritableStream, TransformStream } from "node:stream/web";
+// Polyfill Web API globals that undici (and the Anthropic SDK) need.
+// node:buffer / node:worker_threads / node:stream/web have no global dependencies
+// themselves, so these assignments are safe at module load time.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-Object.assign(globalThis as any, { Blob, File });
+Object.assign(globalThis as any, {
+  Blob,
+  File,
+  MessageChannel,
+  MessagePort,
+  ReadableStream,
+  WritableStream,
+  TransformStream,
+});
 
 import { DigestEmail } from "../src/email/DigestEmail.js";
 import { fetchDigestData } from "../src/data/fetchFeeds.js";
 import { curateCves } from "../src/curation/index.js";
 
 export default async function Preview() {
-  // Dynamic import ensures undici loads after globalThis.Blob is set above.
+  // Dynamic import ensures undici loads after the globalThis polyfills above are applied.
   const { FormData, fetch } = await import("undici");
   Object.assign(globalThis, { FormData, fetch });
 
