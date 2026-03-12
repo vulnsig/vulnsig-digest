@@ -17,11 +17,3 @@ export interface CveDataset {
 }
 
 export type SeverityLevel = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | "NONE";
-
-export function severityFromScore(score: number): SeverityLevel {
-  if (score >= 9.0) return "CRITICAL";
-  if (score >= 7.0) return "HIGH";
-  if (score >= 4.0) return "MEDIUM";
-  if (score > 0) return "LOW";
-  return "NONE";
-}

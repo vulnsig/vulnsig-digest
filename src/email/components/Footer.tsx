@@ -18,23 +18,24 @@ export function Footer() {
 
 const container: React.CSSProperties = {
   padding: `${spacing.lg}px ${spacing.xl}px`,
-  borderTop: `2px solid ${colors.border}`,
+  borderTop: `1px solid ${colors.border}`,
   textAlign: "center" as const,
 };
 
 const text: React.CSSProperties = {
   fontFamily: fonts.sans,
-  fontSize: 14,
+  fontSize: 13,
   margin: 0,
 };
 
 const link: React.CSSProperties = {
   color: colors.link,
+  textDecoration: "underline",
 };
 
 const muted: React.CSSProperties = {
   fontFamily: fonts.sans,
-  fontSize: 12,
+  fontSize: 11,
   color: colors.textMuted,
   margin: `${spacing.sm}px 0 0`,
 };

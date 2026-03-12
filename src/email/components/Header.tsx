@@ -9,10 +9,10 @@ export function Header({ date }: HeaderProps) {
   return (
     <Section style={container}>
       <Heading as="h1" style={title}>
-        VulnSig Daily Digest
+        VulnSig
       </Heading>
-      <Text style={subtitle}>{date}</Text>
-      <Text style={link}>vulnsig.io</Text>
+      <Text style={tagline}>more than a score</Text>
+      <Text style={digest}>Daily Digest · {date}</Text>
     </Section>
   );
 }
@@ -21,26 +21,31 @@ const container: React.CSSProperties = {
   backgroundColor: colors.headerBg,
   padding: `${spacing.lg}px ${spacing.xl}px`,
   textAlign: "center" as const,
+  borderBottom: `1px solid ${colors.border}`,
 };
 
 const title: React.CSSProperties = {
   color: colors.headerText,
   fontFamily: fonts.sans,
-  fontSize: 24,
+  fontSize: 28,
   fontWeight: 700,
+  letterSpacing: "0.05em",
   margin: 0,
 };
 
-const subtitle: React.CSSProperties = {
-  color: "#a0aec0",
+const tagline: React.CSSProperties = {
+  color: colors.textMuted,
   fontFamily: fonts.sans,
-  fontSize: 14,
+  fontSize: 13,
+  fontStyle: "italic",
   margin: `${spacing.xs}px 0 0`,
 };
 
-const link: React.CSSProperties = {
-  color: "#60a5fa",
-  fontFamily: fonts.sans,
-  fontSize: 12,
-  margin: `${spacing.xs}px 0 0`,
+const digest: React.CSSProperties = {
+  color: colors.textMuted,
+  fontFamily: fonts.mono,
+  fontSize: 11,
+  margin: `${spacing.sm}px 0 0`,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase" as const,
 };

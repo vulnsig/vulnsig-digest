@@ -14,11 +14,16 @@ export function CveSection({ entries, glyphBaseUrl }: CveSectionProps) {
   return (
     <Section style={container}>
       <Heading as="h2" style={heading}>
-        RECENT CVEs
+        Recent Common Vulnerabilities and Exposures
       </Heading>
       <Text style={subtitle}>New vulnerabilities published in last 24h</Text>
       {entries.map((entry) => (
-        <VulnRow key={entry.id} entry={entry} glyphBaseUrl={glyphBaseUrl} />
+        <VulnRow
+          key={entry.id}
+          entry={entry}
+          glyphBaseUrl={glyphBaseUrl}
+          variant="cve"
+        />
       ))}
     </Section>
   );
@@ -26,15 +31,16 @@ export function CveSection({ entries, glyphBaseUrl }: CveSectionProps) {
 
 const container: React.CSSProperties = {
   padding: `${spacing.lg}px ${spacing.xl}px`,
-  borderTop: `2px solid ${colors.border}`,
+  borderTop: `1px solid ${colors.border}`,
 };
 
 const heading: React.CSSProperties = {
-  fontFamily: fonts.sans,
-  fontSize: 16,
+  fontFamily: fonts.mono,
+  fontSize: 11,
   fontWeight: 700,
   color: colors.text,
   margin: 0,
+  letterSpacing: "0.1em",
 };
 
 const subtitle: React.CSSProperties = {

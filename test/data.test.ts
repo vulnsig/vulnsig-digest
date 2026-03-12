@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import { deduplicateByVector } from "../src/data/deduplicate.js";
 import { selectRecent } from "../src/data/fetchFeeds.js";
 import { glyphUrl } from "../src/data/glyph.js";
-import { severityFromScore } from "../src/data/types.js";
 import type { CveEntry } from "../src/data/types.js";
 import sampleCves from "./fixtures/sample-cves.json";
 
@@ -51,24 +50,16 @@ describe("glyphUrl", () => {
     expect(url).toContain("vector=");
     expect(url).toContain("score=9.8");
     expect(url).toContain("size=128");
+    expect(url).toContain("density=72");
   });
 
   it("allows custom size", () => {
     const url = glyphUrl(entries[0], "https://vulnsig.io/api/png", 256);
     expect(url).toContain("size=256");
   });
-});
 
-describe("severityFromScore", () => {
-  it("classifies scores correctly", () => {
-    expect(severityFromScore(9.8)).toBe("CRITICAL");
-    expect(severityFromScore(9.0)).toBe("CRITICAL");
-    expect(severityFromScore(8.1)).toBe("HIGH");
-    expect(severityFromScore(7.0)).toBe("HIGH");
-    expect(severityFromScore(6.1)).toBe("MEDIUM");
-    expect(severityFromScore(4.0)).toBe("MEDIUM");
-    expect(severityFromScore(3.7)).toBe("LOW");
-    expect(severityFromScore(0.1)).toBe("LOW");
-    expect(severityFromScore(0)).toBe("NONE");
+  it("allows custom density", () => {
+    const url = glyphUrl(entries[0], "https://vulnsig.io/api/png", 128, 144);
+    expect(url).toContain("density=144");
   });
 });

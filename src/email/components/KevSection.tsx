@@ -14,11 +14,16 @@ export function KevSection({ entries, glyphBaseUrl }: KevSectionProps) {
   return (
     <Section style={container}>
       <Heading as="h2" style={heading}>
-        KNOWN EXPLOITED VULNERABILITIES (KEV)
+        Known Exploited Vulnerabilities (KEV)
       </Heading>
       <Text style={subtitle}>Recently added to CISA KEV catalog</Text>
       {entries.map((entry) => (
-        <VulnRow key={entry.id} entry={entry} glyphBaseUrl={glyphBaseUrl} />
+        <VulnRow
+          key={entry.id}
+          entry={entry}
+          glyphBaseUrl={glyphBaseUrl}
+          variant="kev"
+        />
       ))}
     </Section>
   );
@@ -29,11 +34,12 @@ const container: React.CSSProperties = {
 };
 
 const heading: React.CSSProperties = {
-  fontFamily: fonts.sans,
-  fontSize: 16,
+  fontFamily: fonts.mono,
+  fontSize: 11,
   fontWeight: 700,
-  color: colors.severity.CRITICAL,
+  color: colors.text,
   margin: 0,
+  letterSpacing: "0.1em",
 };
 
 const subtitle: React.CSSProperties = {

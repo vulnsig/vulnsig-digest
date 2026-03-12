@@ -1,4 +1,5 @@
 import { Body, Container, Head, Html, Preview } from "@react-email/components";
+import { Tailwind } from "@react-email/tailwind";
 import type { CveEntry } from "../data/types.js";
 import { Header } from "./components/Header.js";
 import { KevSection } from "./components/KevSection.js";
@@ -25,23 +26,25 @@ export function DigestEmail({
     <Html>
       <Head />
       <Preview>{previewText}</Preview>
-      <Body style={body}>
-        <Container style={container}>
-          <Header date={date} />
-          <KevSection entries={kevs} glyphBaseUrl={glyphBaseUrl} />
-          <CveSection entries={cves} glyphBaseUrl={glyphBaseUrl} />
-          <Footer />
-        </Container>
-      </Body>
+      <Tailwind>
+        <Body style={body}>
+          <Container style={container}>
+            <Header date={date} />
+            <KevSection entries={kevs} glyphBaseUrl={glyphBaseUrl} />
+            <CveSection entries={cves} glyphBaseUrl={glyphBaseUrl} />
+            <Footer />
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
 }
 
 const body: React.CSSProperties = {
-  backgroundColor: "#f3f4f6",
+  backgroundColor: colors.body,
   fontFamily: fonts.sans,
   margin: 0,
-  padding: 0,
+  padding: "24px 0",
 };
 
 const container: React.CSSProperties = {
@@ -50,6 +53,7 @@ const container: React.CSSProperties = {
   margin: "0 auto",
   borderRadius: 8,
   overflow: "hidden",
+  border: `1px solid ${colors.border}`,
 };
 
 export default DigestEmail;
