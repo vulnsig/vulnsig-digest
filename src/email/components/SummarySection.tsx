@@ -14,6 +14,7 @@ export function SummarySection({
 
   return (
     <Section style={container}>
+      {curatedWithLlm && <Text style={badge}>LLM-generated summary</Text>}
       {summary &&
         summary.split(/\n\n+/).map((para, i) => (
           <Text key={i} style={body}>
@@ -32,6 +33,16 @@ export function SummarySection({
 const container: React.CSSProperties = {
   padding: `${spacing.lg}px ${spacing.xl}px`,
   borderTop: `1px solid ${colors.border}`,
+};
+
+const badge: React.CSSProperties = {
+  fontFamily: fonts.mono,
+  fontSize: 10,
+  fontWeight: 700,
+  color: colors.textMuted,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase" as const,
+  margin: `0 0 ${spacing.sm}px`,
 };
 
 const body: React.CSSProperties = {

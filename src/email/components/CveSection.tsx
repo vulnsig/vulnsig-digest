@@ -14,9 +14,9 @@ export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
   return (
     <Section style={container}>
       <Heading as="h2" style={heading}>
-        Recent Common Vulnerabilities and Exposures
+        Recent Common Vulnerabilities and Exposures (CEV)
       </Heading>
-      <Text style={subtitle}>New vulnerabilities published in last 24h</Text>
+      <Text style={subtitle}>New vulnerabilities published in the last 24 hours</Text>
       {curated.map((group) => (
         <Section key={group.representative.id} style={groupContainer}>
           <VulnRow
@@ -52,8 +52,8 @@ const container: React.CSSProperties = {
 };
 
 const heading: React.CSSProperties = {
-  fontFamily: fonts.mono,
-  fontSize: 11,
+  fontFamily: fonts.sans,
+  fontSize: 13,
   fontWeight: 700,
   color: colors.text,
   margin: 0,

@@ -36,8 +36,8 @@ const rowContainer: React.CSSProperties = {
 };
 
 const heading: React.CSSProperties = {
-  fontFamily: fonts.mono,
-  fontSize: 11,
+  fontFamily: fonts.sans,
+  fontSize: 13,
   fontWeight: 700,
   color: colors.text,
   margin: 0,

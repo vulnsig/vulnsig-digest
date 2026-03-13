@@ -10,8 +10,8 @@ function compareByScoreDesc(a: CveEntry, b: CveEntry): number {
 
 export function groupAndSelect(
   annotated: Annotated[],
-  cap = 15,
-  diversityCap = 15,
+  cap = 10,
+  diversityCap = 10,
 ): { curated: CuratedCve[]; totalProductsFound: number } {
   // Group by normalized (lowercase) product name
   const groups = new Map<string, Annotated[]>();
