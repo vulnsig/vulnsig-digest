@@ -64,15 +64,40 @@ describe("groupAndSelect", () => {
     const input = Array.from({ length: 25 }, (_, i) =>
       makeCve(`CVE-${String(i).padStart(3, "0")}`, `Product${i}`, 5.0),
     );
-    const { curated } = groupAndSelect(input, 20);
+    const { curated } = groupAndSelect(input, 20, 0);
     expect(curated).toHaveLength(20);
   });
 
-  it("sorts groups by representative score descending", () => {
+  it("adds diversity picks with unique vectors beyond the cap", () => {
+    const sharedVector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H";
+    const input = Array.from({ length: 20 }, (_, i) =>
+      makeCve(`CVE-${String(i).padStart(3, "0")}`, `Top${i}`, 9.0, undefined, sharedVector),
+    );
+    input.push(
+      makeCve("CVE-DIV1", "DiverseA", 3.0, undefined, "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:L/I:N/A:N"),
+      makeCve("CVE-DIV2", "DiverseB", 2.0, undefined, "CVSS:3.1/AV:P/AC:H/PR:H/UI:R/S:U/C:N/I:L/A:N"),
+    );
+    const { curated } = groupAndSelect(input, 20, 5);
+    expect(curated).toHaveLength(22);
+    const products = curated.map((c) => c.product);
+    expect(products).toContain("DiverseA");
+    expect(products).toContain("DiverseB");
+  });
+
+  it("does not add diversity picks with already-seen vectors", () => {
+    const sharedVector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H";
+    const input = Array.from({ length: 22 }, (_, i) =>
+      makeCve(`CVE-${String(i).padStart(3, "0")}`, `Prod${i}`, 9.0 - i * 0.1, undefined, sharedVector),
+    );
+    const { curated } = groupAndSelect(input, 20, 5);
+    expect(curated).toHaveLength(20); // no diversity picks since all vectors are identical
+  });
+
+  it("sorts groups by representative published date descending", () => {
     const input = [
-      makeCve("CVE-001", "Alpha", 5.0),
-      makeCve("CVE-002", "Beta", 9.8),
-      makeCve("CVE-003", "Gamma", 7.5),
+      makeCve("CVE-001", "Alpha", 5.0, "2026-03-11T08:00:00Z"),
+      makeCve("CVE-002", "Beta", 9.8, "2026-03-11T12:00:00Z"),
+      makeCve("CVE-003", "Gamma", 7.5, "2026-03-11T10:00:00Z"),
     ];
     const { curated } = groupAndSelect(input);
     expect(curated.map((c) => c.product)).toEqual(["Beta", "Gamma", "Alpha"]);

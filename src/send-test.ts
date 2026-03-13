@@ -30,14 +30,19 @@ async function main() {
   const kevWindowDays = parseInt(process.env.KEV_WINDOW_DAYS ?? "7", 10);
 
   console.log("Fetching feeds...");
-  const data = await fetchDigestData(cveUrl, kevUrl, cveWindowHours, kevWindowDays);
+  const data = await fetchDigestData(
+    cveUrl,
+    kevUrl,
+    cveWindowHours,
+    kevWindowDays,
+  );
   console.log(`CVEs: ${data.cves.length} raw, KEVs: ${data.kevs.length}`);
 
   console.log("Curating CVEs...");
   const curation = await curateCves(data.cves);
   console.log(
     `Curated: ${curation.curated.length} products from ${curation.totalProductsFound} found` +
-    (curation.curatedWithLlm ? "" : " (fallback)"),
+      (curation.curatedWithLlm ? "" : " (fallback)"),
   );
   console.log(`Sending to: ${recipients.join(", ")}`);
 

@@ -18,12 +18,9 @@ export function KevSection({ entries, glyphBaseUrl }: KevSectionProps) {
       </Heading>
       <Text style={subtitle}>Recently added to CISA KEV catalog</Text>
       {entries.map((entry) => (
-        <VulnRow
-          key={entry.id}
-          entry={entry}
-          glyphBaseUrl={glyphBaseUrl}
-          variant="kev"
-        />
+        <Section key={entry.id} style={rowContainer}>
+          <VulnRow entry={entry} glyphBaseUrl={glyphBaseUrl} variant="kev" />
+        </Section>
       ))}
     </Section>
   );
@@ -31,6 +28,10 @@ export function KevSection({ entries, glyphBaseUrl }: KevSectionProps) {
 
 const container: React.CSSProperties = {
   padding: `${spacing.lg}px ${spacing.xl}px`,
+};
+
+const rowContainer: React.CSSProperties = {
+  borderBottom: `1px solid ${colors.border}`,
 };
 
 const heading: React.CSSProperties = {

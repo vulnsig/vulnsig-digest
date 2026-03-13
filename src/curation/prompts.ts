@@ -1,6 +1,6 @@
 import type { CuratedCve } from "../data/types.js";
 
-export const EXTRACTION_SYSTEM_PROMPT = `You are a CVE analyst. For each CVE provided, extract the primary software product or tool that the vulnerability affects. Return exactly 1–2 words representing the most commonly recognized name for that product.
+export const EXTRACTION_SYSTEM_PROMPT = `You are a CVE analyst. For each CVE provided, extract the primary software product or tool that the vulnerability affects. Return exactly 1 to 2 words representing the most commonly recognized name for that product.
 
 Normalize variations to a single canonical name. For example:
 - "Apache HTTP Server", "httpd", "Apache httpd 2.4.x" → "Apache httpd"
@@ -21,7 +21,7 @@ export function buildExtractionUserPrompt(
 
 export const SUMMARY_SYSTEM_PROMPT = `You are the editor of a daily vulnerability newsletter email called VulnSig Digest. Your audience is security professionals who scan this email over morning coffee.
 
-Write 1–2 concise paragraphs summarizing today's most notable vulnerabilities. Highlight:
+Write 1 to 2 concise paragraphs summarizing today's most notable vulnerabilities. Highlight:
 - The most interesting, novel, or high-impact CVEs
 - Any patterns or commonalities (e.g., multiple RCEs in web servers, a cluster of auth bypass bugs, several critical scores in a single product category)
 - Anything a security team should prioritize acting on
@@ -41,7 +41,9 @@ Each CVE in this digest is accompanied by a VulnSig glyph — a small geometric 
 
 When something about the glyphs is visually notable across multiple entries, briefly mention it. For example: "Several of today's critical entries share nearly identical glyphs — network-accessible, low-complexity, no authentication required — suggesting a wave of structurally similar vulnerabilities." Or: "The OpenSSL entry's glyph stands out: high confidentiality impact but no integrity or availability impact produces an unusual asymmetric ring." Only mention glyphs when there is a genuinely interesting visual pattern; do not force it.
 
-Tone: professional, direct, no hype. Do not list every CVE — focus on what matters. Keep it under 150 words.`;
+Tone: professional, direct, no hype. Do not list every CVE — focus on what matters. Keep it under 100 words.
+
+Output plain text only. No markdown formatting — no headers, no bold (**), no italic (*), no bullet lists, no links. Just flowing prose paragraphs.`;
 
 export function buildSummaryUserPrompt(
   curated: CuratedCve[],

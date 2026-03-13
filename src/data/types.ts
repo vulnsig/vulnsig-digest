@@ -31,3 +31,10 @@ export interface CurationResult {
   totalProductsFound: number;
   curatedWithLlm: boolean;
 }
+
+/** Serialized snapshot written by curate-debug, read by preview/dev.tsx */
+export interface DigestSnapshot {
+  date: string;
+  curation: CurationResult;
+  kevs: CveEntry[];
+}

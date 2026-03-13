@@ -1,4 +1,4 @@
-import { Heading, Section, Text } from "@react-email/components";
+import { Heading, Link, Section, Text } from "@react-email/components";
 import type { CuratedCve } from "../../data/types.js";
 import { colors, fonts, spacing } from "../styles.js";
 import { VulnRow } from "./VulnRow.js";
@@ -18,8 +18,7 @@ export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
       </Heading>
       <Text style={subtitle}>New vulnerabilities published in last 24h</Text>
       {curated.map((group) => (
-        <Section key={group.representative.id}>
-          <Text style={productLabel}>{group.product}</Text>
+        <Section key={group.representative.id} style={groupContainer}>
           <VulnRow
             entry={group.representative}
             glyphBaseUrl={glyphBaseUrl}
@@ -27,8 +26,18 @@ export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
           />
           {group.related.length > 0 && (
             <Text style={relatedNote}>
-              +{group.related.length} related:{" "}
-              {group.related.map((r) => r.id).join(", ")}
+              {group.related.length} related:{" "}
+              {group.related.map((r, i) => (
+                <span key={r.id}>
+                  {i > 0 && ", "}
+                  <Link
+                    href={`https://nvd.nist.gov/vuln/detail/${r.id}`}
+                    style={relatedLink}
+                  >
+                    {r.id}
+                  </Link>
+                </span>
+              ))}
             </Text>
           )}
         </Section>
@@ -58,14 +67,8 @@ const subtitle: React.CSSProperties = {
   margin: `${spacing.xs}px 0 ${spacing.md}px`,
 };
 
-const productLabel: React.CSSProperties = {
-  fontFamily: fonts.mono,
-  fontSize: 10,
-  fontWeight: 700,
-  color: colors.textMuted,
-  letterSpacing: "0.12em",
-  textTransform: "uppercase" as const,
-  margin: `${spacing.md}px 0 0`,
+const groupContainer: React.CSSProperties = {
+  borderBottom: `1px solid ${colors.border}`,
 };
 
 const relatedNote: React.CSSProperties = {
@@ -73,4 +76,9 @@ const relatedNote: React.CSSProperties = {
   fontSize: 11,
   color: colors.textMuted,
   margin: `${spacing.xs}px 0 0`,
+};
+
+const relatedLink: React.CSSProperties = {
+  color: colors.text,
+  textDecoration: "none",
 };

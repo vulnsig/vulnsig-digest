@@ -69,7 +69,6 @@ export function VulnRow({ entry, glyphBaseUrl, variant }: VulnRowProps) {
 }
 
 const container: React.CSSProperties = {
-  borderBottom: `1px solid ${colors.border}`,
   padding: `${spacing.md}px 0`,
 };
 

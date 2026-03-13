@@ -47,7 +47,7 @@ export const spacing = {
   xl: 32,
 };
 
-export function truncate(text: string, maxLength = 200): string {
+export function truncate(text: string, maxLength = 400): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength).trimEnd() + "...";
 }

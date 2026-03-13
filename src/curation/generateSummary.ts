@@ -27,5 +27,20 @@ export async function generateSummary(
 
   const text =
     response.content[0]?.type === "text" ? response.content[0].text : "";
-  return text.trim();
+  return stripMarkdown(text.trim());
+}
+
+/** Remove markdown formatting that doesn't render in email HTML. */
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/^#{1,6}\s+/gm, "") // headings
+    .replace(/\*\*(.+?)\*\*/g, "$1") // bold
+    .replace(/\*(.+?)\*/g, "$1") // italic
+    .replace(/__(.+?)__/g, "$1") // bold (underscores)
+    .replace(/_(.+?)_/g, "$1") // italic (underscores)
+    .replace(/`(.+?)`/g, "$1") // inline code
+    .replace(/^\s*[-*+]\s+/gm, "") // unordered list markers
+    .replace(/^\s*\d+\.\s+/gm, "") // ordered list markers
+    .replace(/\[(.+?)\]\(.+?\)/g, "$1") // links → text only
+    .trim();
 }

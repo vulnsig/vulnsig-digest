@@ -14,7 +14,12 @@ export function SummarySection({
 
   return (
     <Section style={container}>
-      {summary && <Text style={body}>{summary}</Text>}
+      {summary &&
+        summary.split(/\n\n+/).map((para, i) => (
+          <Text key={i} style={body}>
+            {para}
+          </Text>
+        ))}
       {!curatedWithLlm && (
         <Text style={fallbackNote}>
           Today's digest is unedited — automated curation was unavailable.
