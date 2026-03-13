@@ -19,8 +19,6 @@ export function buildExtractionUserPrompt(
   return JSON.stringify(batch, null, 2);
 }
 
-
-
 // export const SUMMARY_SYSTEM_PROMPT = `You are the editor of a daily vulnerability newsletter email called VulnSig Digest. Your audience is security professionals who scan this email over morning coffee.
 
 // Write 1 to 2 concise paragraphs summarizing today's most notable vulnerabilities. Highlight:
