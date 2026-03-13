@@ -19,6 +19,7 @@ export const colors = {
   bg: "#18181b", // zinc-900
   bgMuted: "#27272a", // zinc-800
   text: "#d4d4d8", // zinc-300
+  textMedium: "#a1a1aa", // zinc-400
   textMuted: "#71717a", // zinc-500
   border: "#27272a", // zinc-800
   headerBg: "#09090b", // zinc-950

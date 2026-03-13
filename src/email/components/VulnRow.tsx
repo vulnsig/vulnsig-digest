@@ -110,7 +110,7 @@ const subtitle: React.CSSProperties = {
 const description: React.CSSProperties = {
   fontFamily: fonts.sans,
   fontSize: 13,
-  color: colors.textMuted,
+  color: colors.textMedium,
   margin: `${spacing.xs}px 0 0`,
   lineHeight: "19px",
 };
