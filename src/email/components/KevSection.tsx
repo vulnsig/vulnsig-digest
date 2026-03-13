@@ -35,24 +35,25 @@ export function KevSection({
 
 const container: React.CSSProperties = {
   padding: `${spacing.lg}px ${spacing.xl}px`,
+  borderTop: `1px solid ${colors.zinc800}`,
 };
 
 const rowContainer: React.CSSProperties = {
-  borderBottom: `1px solid ${colors.border}`,
+  // borderBottom: `1px solid ${colors.zinc800}`,
 };
 
 const heading: React.CSSProperties = {
   fontFamily: fonts.sans,
-  fontSize: 13,
+  fontSize: 15,
   fontWeight: 700,
-  color: colors.text,
+  color: colors.zinc400,
   margin: 0,
-  letterSpacing: "0.1em",
+  // letterSpacing: "0.1em",
 };
 
 const subtitle: React.CSSProperties = {
   fontFamily: fonts.sans,
   fontSize: 13,
-  color: colors.textMuted,
+  color: colors.zinc500,
   margin: `${spacing.xs}px 0 ${spacing.md}px`,
 };

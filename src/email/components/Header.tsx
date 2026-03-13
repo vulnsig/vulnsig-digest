@@ -18,14 +18,14 @@ export function Header({ date }: HeaderProps) {
 }
 
 const container: React.CSSProperties = {
-  backgroundColor: colors.headerBg,
+  backgroundColor: colors.zinc950,
   padding: `${spacing.lg}px ${spacing.xl}px`,
   textAlign: "center" as const,
-  borderBottom: `1px solid ${colors.border}`,
+  borderBottom: `1px solid ${colors.zinc800}`,
 };
 
 const title: React.CSSProperties = {
-  color: colors.headerText,
+  color: colors.zinc300,
   fontFamily: fonts.sans,
   fontSize: 28,
   fontWeight: 700,
@@ -34,7 +34,7 @@ const title: React.CSSProperties = {
 };
 
 const tagline: React.CSSProperties = {
-  color: colors.textMuted,
+  color: colors.zinc500,
   fontFamily: fonts.sans,
   fontSize: 13,
   fontStyle: "italic",
@@ -42,7 +42,7 @@ const tagline: React.CSSProperties = {
 };
 
 const digest: React.CSSProperties = {
-  color: colors.textMuted,
+  color: colors.zinc500,
   fontFamily: fonts.mono,
   fontSize: 11,
   margin: `${spacing.sm}px 0 0`,

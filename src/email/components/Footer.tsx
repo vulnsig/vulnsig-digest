@@ -6,19 +6,20 @@ export function Footer() {
     <Section style={container}>
       <Text style={text}>
         <Link href="https://vulnsig.io" style={link}>
-          View all vulnerabilities at vulnsig.io
+          vulnsig.io
         </Link>
       </Text>
       <Text style={muted}>
-        You are receiving this because you subscribed to VulnSig Daily Digest.
+        You are receiving this because you subscribed to the VulnSig Digest.
       </Text>
     </Section>
   );
 }
 
 const container: React.CSSProperties = {
-  padding: `${spacing.lg}px ${spacing.xl}px`,
-  borderTop: `1px solid ${colors.border}`,
+  backgroundColor: colors.zinc950,
+  padding: `${spacing.md}px ${spacing.xl}px`,
+  borderTop: `1px solid ${colors.zinc800}`,
   textAlign: "center" as const,
 };
 
@@ -29,13 +30,13 @@ const text: React.CSSProperties = {
 };
 
 const link: React.CSSProperties = {
-  color: colors.link,
-  textDecoration: "underline",
+  color: colors.zinc400,
+  // textDecoration: "underline",
 };
 
 const muted: React.CSSProperties = {
   fontFamily: fonts.sans,
   fontSize: 11,
-  color: colors.textMuted,
+  color: colors.zinc500,
   margin: `${spacing.sm}px 0 0`,
 };

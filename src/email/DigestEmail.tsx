@@ -48,20 +48,22 @@ export function DigestEmail({
   );
 }
 
+// backgroundColor is behind main divs
 const body: React.CSSProperties = {
-  backgroundColor: colors.body,
+  backgroundColor: colors.zinc700,
   fontFamily: fonts.sans,
   margin: 0,
   padding: "24px 0",
 };
 
+// backgroundColor is main body content
 const container: React.CSSProperties = {
-  backgroundColor: colors.bg,
+  backgroundColor: colors.zinc900,
   maxWidth: 600,
   margin: "0 auto",
   borderRadius: 8,
   overflow: "hidden",
-  border: `1px solid ${colors.border}`,
+  border: `1px solid ${colors.zinc800}`,
 };
 
 export default DigestEmail;

@@ -25,23 +25,24 @@ export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
             entry={group.representative}
             glyphBaseUrl={glyphBaseUrl}
             variant="cve"
-          />
-          {group.related.length > 0 && (
-            <Text style={relatedNote}>
-              {group.related.length} related:{" "}
-              {group.related.map((r, i) => (
-                <span key={r.id}>
-                  {i > 0 && ", "}
-                  <Link
-                    href={`https://nvd.nist.gov/vuln/detail/${r.id}`}
-                    style={relatedLink}
-                  >
-                    {r.id}
-                  </Link>
-                </span>
-              ))}
-            </Text>
-          )}
+          >
+            {group.related.length > 0 && (
+              <Text style={relatedNote}>
+                {group.related.length} related:{" "}
+                {group.related.map((r, i) => (
+                  <span key={r.id}>
+                    {i > 0 && ", "}
+                    <Link
+                      href={`https://nvd.nist.gov/vuln/detail/${r.id}`}
+                      style={relatedLink}
+                    >
+                      {r.id}
+                    </Link>
+                  </span>
+                ))}
+              </Text>
+            )}
+          </VulnRow>
         </Section>
       ))}
     </Section>
@@ -50,37 +51,38 @@ export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
 
 const container: React.CSSProperties = {
   padding: `${spacing.lg}px ${spacing.xl}px`,
-  borderTop: `1px solid ${colors.border}`,
+  borderTop: `1px solid ${colors.zinc800}`,
 };
 
 const heading: React.CSSProperties = {
   fontFamily: fonts.sans,
-  fontSize: 13,
+  fontSize: 15,
   fontWeight: 700,
-  color: colors.text,
+  color: colors.zinc400,
   margin: 0,
-  letterSpacing: "0.1em",
+  // letterSpacing: "0.1em",
 };
 
 const subtitle: React.CSSProperties = {
   fontFamily: fonts.sans,
   fontSize: 13,
-  color: colors.textMuted,
+  color: colors.zinc500,
   margin: `${spacing.xs}px 0 ${spacing.md}px`,
 };
 
 const groupContainer: React.CSSProperties = {
-  borderBottom: `1px solid ${colors.border}`,
+  // borderBottom: `1px solid ${colors.zinc800}`,
 };
 
 const relatedNote: React.CSSProperties = {
   fontFamily: fonts.mono,
   fontSize: 11,
-  color: colors.textMuted,
+  color: colors.zinc500,
+  lineHeight: "19px",
   margin: `${spacing.xs}px 0 0`,
 };
 
 const relatedLink: React.CSSProperties = {
-  color: colors.text,
+  color: colors.zinc400,
   textDecoration: "none",
 };

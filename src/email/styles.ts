@@ -1,5 +1,4 @@
 import { scoreToHue } from "vulnsig";
-import type { SeverityLevel } from "../data/types.js";
 
 export { scoreToHue };
 
@@ -15,24 +14,14 @@ export function scoreBadgeTextColor(score: number): string {
 
 // Zinc dark palette — mirrors vulnsig-www
 export const colors = {
-  body: "#09090b", // zinc-950
-  bg: "#18181b", // zinc-900
-  bgMuted: "#27272a", // zinc-800
-  text: "#d4d4d8", // zinc-300
-  textMedium: "#a1a1aa", // zinc-400
-  textMuted: "#71717a", // zinc-500
-  border: "#27272a", // zinc-800
-  headerBg: "#09090b", // zinc-950
-  headerText: "#d4d4d8",
-  link: "#a1a1aa", // zinc-400
-  // Kept for KEV heading — categorical severity is still useful in email
-  severity: {
-    CRITICAL: "#dc2626",
-    HIGH: "#ea580c",
-    MEDIUM: "#ca8a04",
-    LOW: "#3b82f6",
-    NONE: "#71717a",
-  } satisfies Record<SeverityLevel, string>,
+  zinc950: "#09090b",
+  zinc900: "#18181b",
+  zinc800: "#27272a",
+  zinc700: "#3f3f46",
+  zinc600: "#52525b",
+  zinc500: "#71717a",
+  zinc400: "#a1a1aa",
+  zinc300: "#d4d4d8",
 };
 
 export const fonts = {
@@ -48,7 +37,9 @@ export const spacing = {
   xl: 32,
 };
 
-export function truncate(text: string, maxLength = 400): string {
+export function truncate(text: string, maxLength = 300): string {
   if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength).trimEnd() + "...";
+  const lastSpace = text.lastIndexOf(" ", maxLength);
+  const breakAt = lastSpace > 0 ? lastSpace : maxLength;
+  return text.slice(0, breakAt).trimEnd() + "...";
 }

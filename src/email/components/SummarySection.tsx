@@ -23,7 +23,7 @@ export function SummarySection({
         ))}
       {!curatedWithLlm && (
         <Text style={fallbackNote}>
-          Today's digest is unedited — automated curation was unavailable.
+          Today's digest is unedited: automated curation was unavailable.
         </Text>
       )}
     </Section>
@@ -31,15 +31,15 @@ export function SummarySection({
 }
 
 const container: React.CSSProperties = {
-  padding: `${spacing.lg}px ${spacing.xl}px`,
-  borderTop: `1px solid ${colors.border}`,
+  padding: `${spacing.lg}px ${spacing.xl}px ${spacing.xs}px`,
+  borderTop: `1px solid ${colors.zinc800}`,
 };
 
 const badge: React.CSSProperties = {
   fontFamily: fonts.mono,
   fontSize: 10,
   fontWeight: 700,
-  color: colors.textMuted,
+  color: colors.zinc500,
   letterSpacing: "0.08em",
   textTransform: "uppercase" as const,
   margin: `0 0 ${spacing.sm}px`,
@@ -48,7 +48,7 @@ const badge: React.CSSProperties = {
 const body: React.CSSProperties = {
   fontFamily: fonts.sans,
   fontSize: 14,
-  color: colors.text,
+  color: colors.zinc300,
   lineHeight: "22px",
   margin: `0 0 ${spacing.md}px`,
 };
@@ -57,6 +57,6 @@ const fallbackNote: React.CSSProperties = {
   fontFamily: fonts.sans,
   fontSize: 12,
   fontStyle: "italic",
-  color: colors.textMuted,
+  color: colors.zinc500,
   margin: `${spacing.sm}px 0 0`,
 };

@@ -6,6 +6,7 @@ import { fetchDigestData } from "./data/fetchFeeds.js";
 import { extractProducts } from "./curation/extractProducts.js";
 import { groupAndSelect } from "./curation/groupAndSelect.js";
 import { generateSummary } from "./curation/generateSummary.js";
+import { curationDefaults } from "./curation/config.js";
 import type { DigestSnapshot } from "./data/types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -35,7 +36,11 @@ for (const e of annotated) {
 }
 
 console.log("\n━━━ Step 2: Group and select ━━━");
-const { curated, totalProductsFound } = groupAndSelect(annotated, 20);
+const { curated, totalProductsFound } = groupAndSelect(
+  annotated,
+  curationDefaults.cap,
+  curationDefaults.diversityCap,
+);
 console.log(
   `  Distinct products: ${totalProductsFound}  →  top ${curated.length} shown`,
 );

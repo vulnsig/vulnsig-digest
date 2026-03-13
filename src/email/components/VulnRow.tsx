@@ -8,6 +8,7 @@ interface VulnRowProps {
   entry: CveEntry;
   glyphBaseUrl: string;
   variant: "cve" | "kev";
+  children?: React.ReactNode;
 }
 
 function formatDateTime(iso: string): string {
@@ -30,7 +31,7 @@ function formatDate(iso: string): string {
   });
 }
 
-export function VulnRow({ entry, glyphBaseUrl, variant }: VulnRowProps) {
+export function VulnRow({ entry, glyphBaseUrl, variant, children }: VulnRowProps) {
   const imgSrc = glyphUrl(entry, glyphBaseUrl, 100, 144);
   const altText = `VulnSig glyph for ${entry.id} — CVSS ${entry.cvss.baseScore}`;
   const nvdUrl = `https://nvd.nist.gov/vuln/detail/${entry.id}`;
@@ -62,6 +63,7 @@ export function VulnRow({ entry, glyphBaseUrl, variant }: VulnRowProps) {
             {dateLabel} · CVSS {entry.cvss.version}
           </Text>
           <Text style={description}>{truncate(entry.description)}</Text>
+          {children}
         </Column>
       </Row>
     </Section>
@@ -69,7 +71,7 @@ export function VulnRow({ entry, glyphBaseUrl, variant }: VulnRowProps) {
 }
 
 const container: React.CSSProperties = {
-  padding: `${spacing.md}px 0`,
+  padding: `${spacing.sm}px 0`,
 };
 
 const glyphCol: React.CSSProperties = {
@@ -95,14 +97,14 @@ const cveIdStyle: React.CSSProperties = {
 };
 
 const cveLink: React.CSSProperties = {
-  color: colors.text,
+  color: colors.zinc300,
   textDecoration: "none",
 };
 
 const subtitle: React.CSSProperties = {
   fontFamily: fonts.mono,
   fontSize: 11,
-  color: colors.textMuted,
+  color: colors.zinc500,
   margin: `${spacing.xs}px 0 0`,
   letterSpacing: "0.02em",
 };
@@ -110,7 +112,7 @@ const subtitle: React.CSSProperties = {
 const description: React.CSSProperties = {
   fontFamily: fonts.sans,
   fontSize: 13,
-  color: colors.textMedium,
+  color: colors.zinc400,
   margin: `${spacing.xs}px 0 0`,
   lineHeight: "19px",
 };
