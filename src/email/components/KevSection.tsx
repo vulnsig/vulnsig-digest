@@ -9,7 +9,11 @@ interface KevSectionProps {
   windowDays: number;
 }
 
-export function KevSection({ entries, glyphBaseUrl, windowDays }: KevSectionProps) {
+export function KevSection({
+  entries,
+  glyphBaseUrl,
+  windowDays,
+}: KevSectionProps) {
   if (entries.length === 0) return null;
 
   return (
@@ -17,7 +21,9 @@ export function KevSection({ entries, glyphBaseUrl, windowDays }: KevSectionProp
       <Heading as="h2" style={heading}>
         Known Exploited Vulnerabilities (KEV)
       </Heading>
-      <Text style={subtitle}>Added to CISA KEV catalog in the last {windowDays} days</Text>
+      <Text style={subtitle}>
+        Added to CISA KEV catalog in the last {windowDays} days
+      </Text>
       {entries.map((entry) => (
         <Section key={entry.id} style={rowContainer}>
           <VulnRow entry={entry} glyphBaseUrl={glyphBaseUrl} variant="kev" />

@@ -16,7 +16,9 @@ export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
       <Heading as="h2" style={heading}>
         Recent Common Vulnerabilities and Exposures (CEV)
       </Heading>
-      <Text style={subtitle}>New vulnerabilities published in the last 24 hours</Text>
+      <Text style={subtitle}>
+        New vulnerabilities published in the last 24 hours
+      </Text>
       {curated.map((group) => (
         <Section key={group.representative.id} style={groupContainer}>
           <VulnRow

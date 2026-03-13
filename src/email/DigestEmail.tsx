@@ -1,5 +1,4 @@
 import { Body, Container, Head, Html, Preview } from "@react-email/components";
-import { Tailwind } from "@react-email/tailwind";
 import type { CveEntry, CurationResult } from "../data/types.js";
 import { Header } from "./components/Header.js";
 import { SummarySection } from "./components/SummarySection.js";
@@ -29,23 +28,22 @@ export function DigestEmail({
     <Html>
       <Head />
       <Preview>{previewText}</Preview>
-      <Tailwind>
-        <Body style={body}>
-          <Container style={container}>
-            <Header date={date} />
-            <SummarySection
-              summary={curation.summary}
-              curatedWithLlm={curation.curatedWithLlm}
-            />
-            <KevSection entries={kevs} glyphBaseUrl={glyphBaseUrl} windowDays={kevWindowDays} />
-            <CveSection
-              curated={curation.curated}
-              glyphBaseUrl={glyphBaseUrl}
-            />
-            <Footer />
-          </Container>
-        </Body>
-      </Tailwind>
+      <Body style={body}>
+        <Container style={container}>
+          <Header date={date} />
+          <SummarySection
+            summary={curation.summary}
+            curatedWithLlm={curation.curatedWithLlm}
+          />
+          <KevSection
+            entries={kevs}
+            glyphBaseUrl={glyphBaseUrl}
+            windowDays={kevWindowDays}
+          />
+          <CveSection curated={curation.curated} glyphBaseUrl={glyphBaseUrl} />
+          <Footer />
+        </Container>
+      </Body>
     </Html>
   );
 }

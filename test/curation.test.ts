@@ -71,11 +71,29 @@ describe("groupAndSelect", () => {
   it("adds diversity picks with unique vectors beyond the cap", () => {
     const sharedVector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H";
     const input = Array.from({ length: 20 }, (_, i) =>
-      makeCve(`CVE-${String(i).padStart(3, "0")}`, `Top${i}`, 9.0, undefined, sharedVector),
+      makeCve(
+        `CVE-${String(i).padStart(3, "0")}`,
+        `Top${i}`,
+        9.0,
+        undefined,
+        sharedVector,
+      ),
     );
     input.push(
-      makeCve("CVE-DIV1", "DiverseA", 3.0, undefined, "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:L/I:N/A:N"),
-      makeCve("CVE-DIV2", "DiverseB", 2.0, undefined, "CVSS:3.1/AV:P/AC:H/PR:H/UI:R/S:U/C:N/I:L/A:N"),
+      makeCve(
+        "CVE-DIV1",
+        "DiverseA",
+        3.0,
+        undefined,
+        "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:L/I:N/A:N",
+      ),
+      makeCve(
+        "CVE-DIV2",
+        "DiverseB",
+        2.0,
+        undefined,
+        "CVSS:3.1/AV:P/AC:H/PR:H/UI:R/S:U/C:N/I:L/A:N",
+      ),
     );
     const { curated } = groupAndSelect(input, 20, 5);
     expect(curated).toHaveLength(22);
@@ -87,7 +105,13 @@ describe("groupAndSelect", () => {
   it("does not add diversity picks with already-seen vectors", () => {
     const sharedVector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H";
     const input = Array.from({ length: 22 }, (_, i) =>
-      makeCve(`CVE-${String(i).padStart(3, "0")}`, `Prod${i}`, 9.0 - i * 0.1, undefined, sharedVector),
+      makeCve(
+        `CVE-${String(i).padStart(3, "0")}`,
+        `Prod${i}`,
+        9.0 - i * 0.1,
+        undefined,
+        sharedVector,
+      ),
     );
     const { curated } = groupAndSelect(input, 20, 5);
     expect(curated).toHaveLength(20); // no diversity picks since all vectors are identical
