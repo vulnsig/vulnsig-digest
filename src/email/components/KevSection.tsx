@@ -7,12 +7,14 @@ interface KevSectionProps {
   entries: CveEntry[];
   glyphBaseUrl: string;
   windowDays: number;
+  products: Set<string>;
 }
 
 export function KevSection({
   entries,
   glyphBaseUrl,
   windowDays,
+  products,
 }: KevSectionProps) {
   if (entries.length === 0) return null;
 
@@ -26,7 +28,7 @@ export function KevSection({
       </Text>
       {entries.map((entry) => (
         <Section key={entry.id} style={rowContainer}>
-          <VulnRow entry={entry} glyphBaseUrl={glyphBaseUrl} variant="kev" />
+          <VulnRow entry={entry} glyphBaseUrl={glyphBaseUrl} variant="kev" products={products} />
         </Section>
       ))}
     </Section>

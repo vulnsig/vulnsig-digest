@@ -22,6 +22,7 @@ export function DigestEmail({
   glyphBaseUrl,
   kevWindowDays = 7,
 }: DigestEmailProps) {
+  const products = new Set(curation.curated.map((c) => c.product));
   const previewText = `${curation.curated.length} products from ${curation.totalCvesInFeed} CVEs, ${kevs.length} KEV additions — ${date}`;
 
   return (
@@ -34,13 +35,15 @@ export function DigestEmail({
           <SummarySection
             summary={curation.summary}
             curatedWithLlm={curation.curatedWithLlm}
+            products={products}
           />
           <KevSection
             entries={kevs}
             glyphBaseUrl={glyphBaseUrl}
             windowDays={kevWindowDays}
+            products={products}
           />
-          <CveSection curated={curation.curated} glyphBaseUrl={glyphBaseUrl} />
+          <CveSection curated={curation.curated} glyphBaseUrl={glyphBaseUrl} products={products} />
           <Footer />
         </Container>
       </Body>

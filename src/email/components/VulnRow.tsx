@@ -3,11 +3,13 @@ import type { CveEntry } from "../../data/types.js";
 import { glyphUrl } from "../../data/glyph.js";
 import { colors, fonts, spacing, truncate } from "../styles.js";
 import { SeverityBadge } from "./SeverityBadge.js";
+import { HighlightProducts } from "./HighlightProducts.js";
 
 interface VulnRowProps {
   entry: CveEntry;
   glyphBaseUrl: string;
   variant: "cve" | "kev";
+  products?: Set<string>;
   children?: React.ReactNode;
 }
 
@@ -31,7 +33,7 @@ function formatDate(iso: string): string {
   });
 }
 
-export function VulnRow({ entry, glyphBaseUrl, variant, children }: VulnRowProps) {
+export function VulnRow({ entry, glyphBaseUrl, variant, products, children }: VulnRowProps) {
   const imgSrc = glyphUrl(entry, glyphBaseUrl, 100, 144);
   const altText = `VulnSig glyph for ${entry.id} — CVSS ${entry.cvss.baseScore}`;
   const nvdUrl = `https://nvd.nist.gov/vuln/detail/${entry.id}`;
@@ -62,7 +64,13 @@ export function VulnRow({ entry, glyphBaseUrl, variant, children }: VulnRowProps
           <Text style={subtitle}>
             {dateLabel} · CVSS {entry.cvss.version}
           </Text>
-          <Text style={description}>{truncate(entry.description)}</Text>
+          <Text style={description}>
+            {products ? (
+              <HighlightProducts text={truncate(entry.description)} products={products} firstOnly />
+            ) : (
+              truncate(entry.description)
+            )}
+          </Text>
           {children}
         </Column>
       </Row>

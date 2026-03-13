@@ -22,6 +22,8 @@ export const colors = {
   zinc500: "#71717a",
   zinc400: "#a1a1aa",
   zinc300: "#d4d4d8",
+  gray500: "#6b7280",
+  gray400: "#9ca3af",
 };
 
 export const fonts = {

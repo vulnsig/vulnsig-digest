@@ -1,14 +1,17 @@
 import { Section, Text } from "@react-email/components";
 import { colors, fonts, spacing } from "../styles.js";
+import { HighlightProducts } from "./HighlightProducts.js";
 
 interface SummarySectionProps {
   summary: string;
   curatedWithLlm: boolean;
+  products: Set<string>;
 }
 
 export function SummarySection({
   summary,
   curatedWithLlm,
+  products,
 }: SummarySectionProps) {
   if (!summary && curatedWithLlm) return null;
 
@@ -18,7 +21,7 @@ export function SummarySection({
       {summary &&
         summary.split(/\n\n+/).map((para, i) => (
           <Text key={i} style={body}>
-            {para}
+            <HighlightProducts text={para} products={products} variant="subtle" />
           </Text>
         ))}
       {!curatedWithLlm && (

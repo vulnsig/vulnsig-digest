@@ -6,9 +6,10 @@ import { VulnRow } from "./VulnRow.js";
 interface CveSectionProps {
   curated: CuratedCve[];
   glyphBaseUrl: string;
+  products: Set<string>;
 }
 
-export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
+export function CveSection({ curated, glyphBaseUrl, products }: CveSectionProps) {
   if (curated.length === 0) return null;
 
   return (
@@ -25,6 +26,7 @@ export function CveSection({ curated, glyphBaseUrl }: CveSectionProps) {
             entry={group.representative}
             glyphBaseUrl={glyphBaseUrl}
             variant="cve"
+            products={products}
           >
             {group.related.length > 0 && (
               <Text style={relatedNote}>
