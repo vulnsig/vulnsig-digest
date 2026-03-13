@@ -57,7 +57,7 @@ async function main() {
     postmarkToken,
     from,
     recipients,
-    props: { date, curation, kevs: data.kevs, glyphBaseUrl },
+    props: { date, curation, kevs: data.kevs, glyphBaseUrl, kevWindowDays },
   });
 
   console.log(`Done! Sent: ${result.sent}, Failed: ${result.failed}`);

@@ -6,9 +6,10 @@ import { VulnRow } from "./VulnRow.js";
 interface KevSectionProps {
   entries: CveEntry[];
   glyphBaseUrl: string;
+  windowDays: number;
 }
 
-export function KevSection({ entries, glyphBaseUrl }: KevSectionProps) {
+export function KevSection({ entries, glyphBaseUrl, windowDays }: KevSectionProps) {
   if (entries.length === 0) return null;
 
   return (
@@ -16,7 +17,7 @@ export function KevSection({ entries, glyphBaseUrl }: KevSectionProps) {
       <Heading as="h2" style={heading}>
         Known Exploited Vulnerabilities (KEV)
       </Heading>
-      <Text style={subtitle}>Recently added to CISA KEV catalog</Text>
+      <Text style={subtitle}>Added to CISA KEV catalog in the last {windowDays} days</Text>
       {entries.map((entry) => (
         <Section key={entry.id} style={rowContainer}>
           <VulnRow entry={entry} glyphBaseUrl={glyphBaseUrl} variant="kev" />

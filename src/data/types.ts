@@ -37,4 +37,5 @@ export interface DigestSnapshot {
   date: string;
   curation: CurationResult;
   kevs: CveEntry[];
+  kevWindowDays: number;
 }

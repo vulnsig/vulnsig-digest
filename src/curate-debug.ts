@@ -70,6 +70,7 @@ const snapshot: DigestSnapshot = {
     curatedWithLlm: true,
   },
   kevs: data.kevs,
+  kevWindowDays,
 };
 
 const outPath = resolve(__dirname, "../preview/snapshot.json");

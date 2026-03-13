@@ -39,7 +39,7 @@ const body: React.CSSProperties = {
   fontSize: 14,
   color: colors.text,
   lineHeight: "22px",
-  margin: 0,
+  margin: `0 0 ${spacing.md}px`,
 };
 
 const fallbackNote: React.CSSProperties = {

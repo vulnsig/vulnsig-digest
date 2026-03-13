@@ -12,7 +12,7 @@ export async function generateSummary(
   const attempt = () =>
     client.messages.create({
       model: "claude-opus-4-6",
-      max_tokens: 300,
+      max_tokens: 1024,
       system: SUMMARY_SYSTEM_PROMPT,
       messages: [{ role: "user", content: userPrompt }],
     });
@@ -25,9 +25,23 @@ export async function generateSummary(
     response = await attempt(); // throws on second failure — caught by caller
   }
 
-  const text =
+  let text =
     response.content[0]?.type === "text" ? response.content[0].text : "";
-  return stripMarkdown(text.trim());
+  text = stripMarkdown(text.trim());
+
+  // If the response was truncated (hit token limit), trim the trailing
+  // incomplete sentence so we don't end mid-word.
+  if (response.stop_reason === "max_tokens") {
+    text = trimToLastSentence(text);
+  }
+
+  return text;
+}
+
+/** Trim to the last complete sentence (ending in . ! or ?). */
+function trimToLastSentence(text: string): string {
+  const match = text.match(/^([\s\S]*[.!?])\s*/);
+  return match ? match[1].trim() : text;
 }
 
 /** Remove markdown formatting that doesn't render in email HTML. */

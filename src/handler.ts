@@ -55,7 +55,7 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
     postmarkToken,
     from,
     recipients,
-    props: { date, curation, kevs: data.kevs, glyphBaseUrl },
+    props: { date, curation, kevs: data.kevs, glyphBaseUrl, kevWindowDays },
   });
 
   console.log(`Sent: ${result.sent}/${result.total}, Failed: ${result.failed}`);
