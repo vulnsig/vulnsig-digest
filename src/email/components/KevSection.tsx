@@ -28,7 +28,12 @@ export function KevSection({
       </Text>
       {entries.map((entry) => (
         <Section key={entry.id} style={rowContainer}>
-          <VulnRow entry={entry} glyphBaseUrl={glyphBaseUrl} variant="kev" products={products} />
+          <VulnRow
+            entry={entry}
+            glyphBaseUrl={glyphBaseUrl}
+            variant="kev"
+            products={products}
+          />
         </Section>
       ))}
     </Section>

@@ -21,7 +21,11 @@ export function SummarySection({
       {summary &&
         summary.split(/\n\n+/).map((para, i) => (
           <Text key={i} style={body}>
-            <HighlightProducts text={para} products={products} variant="subtle" />
+            <HighlightProducts
+              text={para}
+              products={products}
+              variant="subtle"
+            />
           </Text>
         ))}
       {!curatedWithLlm && (

@@ -33,7 +33,13 @@ function formatDate(iso: string): string {
   });
 }
 
-export function VulnRow({ entry, glyphBaseUrl, variant, products, children }: VulnRowProps) {
+export function VulnRow({
+  entry,
+  glyphBaseUrl,
+  variant,
+  products,
+  children,
+}: VulnRowProps) {
   const imgSrc = glyphUrl(entry, glyphBaseUrl, 100, 144);
   const altText = `VulnSig glyph for ${entry.id} — CVSS ${entry.cvss.baseScore}`;
   const nvdUrl = `https://nvd.nist.gov/vuln/detail/${entry.id}`;
@@ -66,7 +72,11 @@ export function VulnRow({ entry, glyphBaseUrl, variant, products, children }: Vu
           </Text>
           <Text style={description}>
             {products ? (
-              <HighlightProducts text={truncate(entry.description)} products={products} firstOnly />
+              <HighlightProducts
+                text={truncate(entry.description)}
+                products={products}
+                firstOnly
+              />
             ) : (
               truncate(entry.description)
             )}

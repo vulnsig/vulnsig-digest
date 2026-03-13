@@ -9,7 +9,11 @@ interface CveSectionProps {
   products: Set<string>;
 }
 
-export function CveSection({ curated, glyphBaseUrl, products }: CveSectionProps) {
+export function CveSection({
+  curated,
+  glyphBaseUrl,
+  products,
+}: CveSectionProps) {
   if (curated.length === 0) return null;
 
   return (

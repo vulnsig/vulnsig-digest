@@ -24,7 +24,12 @@ const highlightSubtle: React.CSSProperties = {
  * Renders text with product names highlighted in a brighter color.
  * Matching is case-insensitive; original casing from the text is preserved.
  */
-export function HighlightProducts({ text, products, firstOnly, variant = "bright" }: HighlightProductsProps) {
+export function HighlightProducts({
+  text,
+  products,
+  firstOnly,
+  variant = "bright",
+}: HighlightProductsProps) {
   if (products.size === 0) return <>{text}</>;
 
   // Build a single regex that matches any product name (longest first to avoid partial matches)
@@ -47,7 +52,10 @@ export function HighlightProducts({ text, products, firstOnly, variant = "bright
           }
           seen?.add(key);
           return (
-            <span key={i} style={variant === "bright" ? highlightBright : highlightSubtle}>
+            <span
+              key={i}
+              style={variant === "bright" ? highlightBright : highlightSubtle}
+            >
               {part}
             </span>
           );

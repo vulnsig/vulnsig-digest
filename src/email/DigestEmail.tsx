@@ -43,7 +43,11 @@ export function DigestEmail({
             windowDays={kevWindowDays}
             products={products}
           />
-          <CveSection curated={curation.curated} glyphBaseUrl={glyphBaseUrl} products={products} />
+          <CveSection
+            curated={curation.curated}
+            glyphBaseUrl={glyphBaseUrl}
+            products={products}
+          />
           <Footer />
         </Container>
       </Body>
