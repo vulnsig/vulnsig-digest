@@ -40,7 +40,7 @@ jobs:
           key: test-npm-${{ matrix.os.name }}-${{ matrix.node.version }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
           restore-keys: test-npm-${{ matrix.os.name }}-${{ matrix.node.version }}-
 
-      - run: npm install
+      - run: npm ci
 
       - run: npm test
 
@@ -69,6 +69,6 @@ jobs:
           key: checks-npm-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
           restore-keys: checks-npm-
 
-      - run: npm install
+      - run: npm ci
 
       - run: ${{ matrix.checks.command }}
