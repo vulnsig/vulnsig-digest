@@ -2,9 +2,10 @@
 export const config = {
   glyphBaseUrl: "https://vulnsig.io/api/png",
   cveWindowHours: 24,
-  cveMaxCount: 200,
+  cveMaxCount: 300, // limits entries sent to curation
   kevWindowDays: 7,
-  kevMaxCount: 50,
+  kevMaxCount: 4, // infrequently updated
+  // curation only applies to KEV entries
   curation: {
     cap: 10,
     diversityCap: 10,
