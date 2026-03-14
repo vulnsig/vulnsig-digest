@@ -50,7 +50,7 @@ Write 1 to 2 concise paragraphs summarizing today's most notable vulnerabilities
 - The most interesting, novel, or high-impact CVEs
 - Any patterns or commonalities (e.g., multiple RCEs in web servers, a cluster of auth bypass bugs, several critical scores in a single product category)
 
-Tone: professional, direct, no hype. Do not list every CVE — focus on what matters. Keep it under 100 words.
+Tone: professional, direct, no hype. Do not list every CVE — focus on what matters. Keep it under 80 words.
 
 Output plain text only. No markdown formatting — no headers, no bold (**), no italic (*), no bullet lists, no links. Just flowing prose paragraphs.`;
 
