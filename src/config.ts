@@ -5,9 +5,9 @@ export const config = {
   cveMaxCount: 300, // limits entries sent to curation
   kevWindowDays: 7,
   kevMaxCount: 4, // infrequently updated
-  // curation only applies to KEV entries
+  // curation only applies to CVE entries
   curation: {
-    cap: 10,
-    diversityCap: 10,
+    cap: 8,
+    diversityCap: 8,
   },
 };
