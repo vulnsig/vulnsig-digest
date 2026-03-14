@@ -2,6 +2,7 @@ import "dotenv/config";
 import { fetchDigestData } from "./data/fetchFeeds.js";
 import { curateCves } from "./curation/index.js";
 import { sendDigest } from "./send/postmark.js";
+import { config } from "./config.js";
 
 async function main() {
   const cveUrl = process.env.CVE_DATA_URL;
@@ -12,9 +13,6 @@ async function main() {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
-  const glyphBaseUrl =
-    process.env.GLYPH_BASE_URL ?? "https://vulnsig.io/api/png";
-
   if (
     !cveUrl ||
     !kevUrl ||
@@ -26,15 +24,12 @@ async function main() {
     process.exit(1);
   }
 
-  const cveWindowHours = parseInt(process.env.CVE_WINDOW_HOURS ?? "24", 10);
-  const kevWindowDays = parseInt(process.env.KEV_WINDOW_DAYS ?? "7", 10);
-
   console.log("Fetching feeds...");
   const data = await fetchDigestData(
     cveUrl,
     kevUrl,
-    cveWindowHours,
-    kevWindowDays,
+    config.cveWindowHours,
+    config.kevWindowDays,
   );
   console.log(`CVEs: ${data.cves.length} raw, KEVs: ${data.kevs.length}`);
 
@@ -57,7 +52,13 @@ async function main() {
     postmarkToken,
     from,
     recipients,
-    props: { date, curation, kevs: data.kevs, glyphBaseUrl, kevWindowDays },
+    props: {
+      date,
+      curation,
+      kevs: data.kevs,
+      glyphBaseUrl: config.glyphBaseUrl,
+      kevWindowDays: config.kevWindowDays,
+    },
   });
 
   console.log(`Done! Sent: ${result.sent}, Failed: ${result.failed}`);

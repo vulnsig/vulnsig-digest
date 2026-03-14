@@ -1,4 +1,5 @@
 import { DigestEmail } from "../src/email/DigestEmail.js";
+import { config } from "../src/config.js";
 import type { DigestSnapshot } from "../src/data/types.js";
 import snapshot from "./snapshot.json";
 
@@ -15,7 +16,7 @@ export default function Preview() {
       date={date}
       curation={curation}
       kevs={kevs}
-      glyphBaseUrl="https://vulnsig.io/api/png"
+      glyphBaseUrl={config.glyphBaseUrl}
       kevWindowDays={kevWindowDays}
     />
   );

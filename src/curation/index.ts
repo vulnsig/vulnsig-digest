@@ -2,7 +2,7 @@ import { extractProducts } from "./extractProducts.js";
 import { groupAndSelect } from "./groupAndSelect.js";
 import { generateSummary } from "./generateSummary.js";
 import { fallbackCuration } from "./fallback.js";
-import { curationDefaults } from "./config.js";
+import { config } from "../config.js";
 import type { CveEntry, CurationResult } from "../data/types.js";
 
 export async function curateCves(cves: CveEntry[]): Promise<CurationResult> {
@@ -20,8 +20,8 @@ export async function curateCves(cves: CveEntry[]): Promise<CurationResult> {
   // Step 2: Group and select top 20
   const { curated, totalProductsFound } = groupAndSelect(
     annotated,
-    curationDefaults.cap,
-    curationDefaults.diversityCap,
+    config.curation.cap,
+    config.curation.diversityCap,
   );
 
   // Step 3: Generate editorial summary

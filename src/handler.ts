@@ -2,6 +2,7 @@ import type { ScheduledEvent } from "aws-lambda";
 import { fetchDigestData } from "./data/fetchFeeds.js";
 import { curateCves } from "./curation/index.js";
 import { sendDigest } from "./send/postmark.js";
+import { config } from "./config.js";
 
 function requireEnv(name: string): string {
   const value = process.env[name];
@@ -18,22 +19,17 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
-  const glyphBaseUrl = requireEnv("GLYPH_BASE_URL");
-
   if (recipients.length === 0) {
     console.warn("No recipients configured, skipping send");
     return;
   }
 
-  const cveWindowHours = parseInt(process.env.CVE_WINDOW_HOURS ?? "24", 10);
-  const kevWindowDays = parseInt(process.env.KEV_WINDOW_DAYS ?? "7", 10);
-
   console.log("Fetching CVE and KEV feeds...");
   const data = await fetchDigestData(
     cveUrl,
     kevUrl,
-    cveWindowHours,
-    kevWindowDays,
+    config.cveWindowHours,
+    config.kevWindowDays,
   );
   console.log(`CVEs: ${data.cves.length} raw, KEVs: ${data.kevs.length}`);
 
@@ -55,7 +51,13 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
     postmarkToken,
     from,
     recipients,
-    props: { date, curation, kevs: data.kevs, glyphBaseUrl, kevWindowDays },
+    props: {
+      date,
+      curation,
+      kevs: data.kevs,
+      glyphBaseUrl: config.glyphBaseUrl,
+      kevWindowDays: config.kevWindowDays,
+    },
   });
 
   console.log(`Sent: ${result.sent}/${result.total}, Failed: ${result.failed}`);

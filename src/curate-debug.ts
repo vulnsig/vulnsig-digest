@@ -6,22 +6,20 @@ import { fetchDigestData } from "./data/fetchFeeds.js";
 import { extractProducts } from "./curation/extractProducts.js";
 import { groupAndSelect } from "./curation/groupAndSelect.js";
 import { generateSummary } from "./curation/generateSummary.js";
-import { curationDefaults } from "./curation/config.js";
+import { config } from "./config.js";
 import type { DigestSnapshot } from "./data/types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const cveUrl = process.env.CVE_DATA_URL!;
 const kevUrl = process.env.KEV_DATA_URL!;
-const cveWindowHours = parseInt(process.env.CVE_WINDOW_HOURS ?? "24", 10);
-const kevWindowDays = parseInt(process.env.KEV_WINDOW_DAYS ?? "7", 10);
 
 console.log("━━━ Step 0: Fetch ━━━");
 const data = await fetchDigestData(
   cveUrl,
   kevUrl,
-  cveWindowHours,
-  kevWindowDays,
+  config.cveWindowHours,
+  config.kevWindowDays,
 );
 console.log(`  CVEs in window: ${data.cves.length}`);
 console.log(`  KEVs in window: ${data.kevs.length}`);
@@ -38,8 +36,8 @@ for (const e of annotated) {
 console.log("\n━━━ Step 2: Group and select ━━━");
 const { curated, totalProductsFound } = groupAndSelect(
   annotated,
-  curationDefaults.cap,
-  curationDefaults.diversityCap,
+  config.curation.cap,
+  config.curation.diversityCap,
 );
 console.log(
   `  Distinct products: ${totalProductsFound}  →  top ${curated.length} shown`,
@@ -75,7 +73,7 @@ const snapshot: DigestSnapshot = {
     curatedWithLlm: true,
   },
   kevs: data.kevs,
-  kevWindowDays,
+  kevWindowDays: config.kevWindowDays,
 };
 
 const outPath = resolve(__dirname, "../preview/snapshot.json");
