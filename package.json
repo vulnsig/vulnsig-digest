@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "email dev -d preview -p 3000",
-    "build": "tsup src/handler.ts --format esm --target node20 --out-dir dist --clean",
-    "package": "npm run build && cd dist && zip -r ../vulnsig-digest.zip .",
+    "bundle": "esbuild src/handler.ts --bundle --platform=node --target=node22 --format=cjs --jsx=automatic --outfile=dist/handler.js",
     "curate": "tsx src/curate-debug.ts",
     "send": "tsx src/send-test.ts",
     "test": "vitest run",
