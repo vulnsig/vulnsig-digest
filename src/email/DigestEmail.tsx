@@ -1,5 +1,5 @@
 import { Body, Container, Head, Html, Preview } from "@react-email/components";
-import type { CveEntry, CurationResult } from "../data/types.js";
+import type { CveEntry, CurationResult, ProductInfo } from "../data/types.js";
 import { Header } from "./components/Header.js";
 import { SummarySection } from "./components/SummarySection.js";
 import { KevSection } from "./components/KevSection.js";
@@ -13,6 +13,7 @@ export interface DigestEmailProps {
   kevs: CveEntry[];
   glyphBaseUrl: string;
   kevWindowDays?: number;
+  products?: Record<string, ProductInfo>;
 }
 
 export function DigestEmail({
@@ -21,8 +22,14 @@ export function DigestEmail({
   kevs,
   glyphBaseUrl,
   kevWindowDays = 7,
+  products: productMap,
 }: DigestEmailProps) {
-  const products = new Set(curation.curated.map((c) => c.product));
+  const productNames = new Set(curation.curated.map((c) => c.product));
+  if (productMap) {
+    for (const info of Object.values(productMap)) {
+      productNames.add(info.product);
+    }
+  }
   const previewText = `${curation.curated.length} products from ${curation.totalCvesInFeed} CVEs, ${kevs.length} KEV additions — ${date}`;
 
   return (
@@ -35,18 +42,18 @@ export function DigestEmail({
           <SummarySection
             summary={curation.summary}
             curatedWithLlm={curation.curatedWithLlm}
-            products={products}
+            products={productNames}
           />
           <KevSection
             entries={kevs}
             glyphBaseUrl={glyphBaseUrl}
             windowDays={kevWindowDays}
-            products={products}
+            products={productNames}
           />
           <CveSection
             curated={curation.curated}
             glyphBaseUrl={glyphBaseUrl}
-            products={products}
+            products={productNames}
           />
           <Footer />
         </Container>

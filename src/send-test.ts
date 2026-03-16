@@ -58,6 +58,7 @@ async function main() {
       kevs: data.kevs,
       glyphBaseUrl: config.glyphBaseUrl,
       kevWindowDays: config.kevWindowDays,
+      products: data.products,
     },
   });
 

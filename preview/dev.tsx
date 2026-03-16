@@ -8,7 +8,8 @@ import snapshot from "./snapshot.json";
 // This avoids importing @anthropic-ai/sdk, undici, etc. which
 // react-email's esbuild cannot bundle.
 
-const { date, curation, kevs, kevWindowDays } = snapshot as DigestSnapshot;
+const { date, curation, kevs, kevWindowDays, products } =
+  snapshot as DigestSnapshot;
 
 export default function Preview() {
   return (
@@ -18,6 +19,7 @@ export default function Preview() {
       kevs={kevs}
       glyphBaseUrl={config.glyphBaseUrl}
       kevWindowDays={kevWindowDays}
+      products={products}
     />
   );
 }

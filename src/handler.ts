@@ -57,6 +57,7 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
       kevs: data.kevs,
       glyphBaseUrl: config.glyphBaseUrl,
       kevWindowDays: config.kevWindowDays,
+      products: data.products,
     },
   });
 

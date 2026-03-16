@@ -76,6 +76,7 @@ const snapshot: DigestSnapshot = {
   },
   kevs: data.kevs,
   kevWindowDays: config.kevWindowDays,
+  products: data.products,
 };
 
 const outPath = resolve(__dirname, "../preview/snapshot.json");

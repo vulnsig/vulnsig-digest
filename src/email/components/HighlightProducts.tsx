@@ -45,6 +45,7 @@ export function HighlightProducts({
   return (
     <>
       {parts.map((part, i) => {
+        pattern.lastIndex = 0;
         if (pattern.test(part)) {
           const key = part.toLowerCase();
           if (seen && seen.has(key)) {

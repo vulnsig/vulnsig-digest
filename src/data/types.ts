@@ -44,4 +44,5 @@ export interface DigestSnapshot {
   curation: CurationResult;
   kevs: CveEntry[];
   kevWindowDays: number;
+  products: Record<string, ProductInfo>;
 }
