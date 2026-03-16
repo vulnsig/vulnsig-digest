@@ -8,9 +8,8 @@
     "build": "tsup src/handler.ts --format esm --target node20 --out-dir dist --clean",
     "package": "npm run build && cd dist && zip -r ../vulnsig-digest.zip .",
     "curate": "tsx src/curate-debug.ts",
-    "send-test": "tsx src/send-test.ts",
+    "send": "tsx src/send-test.ts",
     "test": "vitest run",
-    "test:watch": "vitest",
     "lint": "eslint . && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
