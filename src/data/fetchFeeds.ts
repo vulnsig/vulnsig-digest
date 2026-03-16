@@ -41,8 +41,6 @@ export async function fetchDigestData(
     fetchFeed(kevUrl),
   ]);
 
-  console.debug("kevFeed.products:", JSON.stringify(kevFeed.products, null, 2));
-
   const now = Date.now();
   const cveCutoff = new Date(now - cveWindowHours * 60 * 60 * 1000);
   const kevCutoff = new Date(now - kevWindowDays * 24 * 60 * 60 * 1000);
