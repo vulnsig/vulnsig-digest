@@ -1,5 +1,5 @@
 import { Heading, Section, Text } from "@react-email/components";
-import type { CveEntry } from "../../data/types.js";
+import type { CveEntry, ProductInfo } from "../../data/types.js";
 import { colors, fonts, spacing } from "../styles.js";
 import { VulnRow } from "./VulnRow.js";
 
@@ -7,7 +7,7 @@ interface KevSectionProps {
   entries: CveEntry[];
   glyphBaseUrl: string;
   windowDays: number;
-  products: Set<string>;
+  products?: Record<string, ProductInfo>;
 }
 
 export function KevSection({

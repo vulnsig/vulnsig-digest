@@ -23,7 +23,7 @@ const data = await fetchDigestData(
 console.log(`  CVEs in window: ${data.cves.length}`);
 console.log(`  KEVs in window: ${data.kevs.length}`);
 
-console.log("\n━━━ Step 1: Annotate products ━━━");
+console.log("\n━━━ Step 1: Load annotations ━━━");
 const annotated = data.cves.map((cve) => ({
   ...cve,
   product: data.products[cve.id]?.product ?? "Unknown",

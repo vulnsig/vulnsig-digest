@@ -1,5 +1,5 @@
 import { Column, Img, Link, Row, Section, Text } from "@react-email/components";
-import type { CveEntry } from "../../data/types.js";
+import type { CveEntry, ProductInfo } from "../../data/types.js";
 import { glyphUrl } from "../../data/glyph.js";
 import { colors, fonts, spacing, truncate } from "../styles.js";
 import { SeverityBadge } from "./SeverityBadge.js";
@@ -9,7 +9,7 @@ interface VulnRowProps {
   entry: CveEntry;
   glyphBaseUrl: string;
   variant: "cve" | "kev";
-  products?: Set<string>;
+  products?: Record<string, ProductInfo>;
   children?: React.ReactNode;
 }
 
@@ -71,10 +71,10 @@ export function VulnRow({
             {dateLabel} · CVSS {entry.cvss.version}
           </Text>
           <Text style={description}>
-            {products ? (
+            {products?.[entry.id]?.product ? (
               <HighlightProducts
                 text={truncate(entry.description)}
-                products={products}
+                products={new Set([products[entry.id].product])}
                 firstOnly
               />
             ) : (
@@ -133,4 +133,6 @@ const description: React.CSSProperties = {
   color: colors.zinc400,
   margin: `${spacing.xs}px 0 0`,
   lineHeight: "19px",
+  wordBreak: "break-word",
+  overflowWrap: "break-word",
 };

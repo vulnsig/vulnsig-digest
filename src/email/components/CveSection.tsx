@@ -1,12 +1,12 @@
 import { Heading, Link, Section, Text } from "@react-email/components";
-import type { CuratedCve } from "../../data/types.js";
+import type { CuratedCve, ProductInfo } from "../../data/types.js";
 import { colors, fonts, spacing } from "../styles.js";
 import { VulnRow } from "./VulnRow.js";
 
 interface CveSectionProps {
   curated: CuratedCve[];
   glyphBaseUrl: string;
-  products: Set<string>;
+  products?: Record<string, ProductInfo>;
 }
 
 export function CveSection({

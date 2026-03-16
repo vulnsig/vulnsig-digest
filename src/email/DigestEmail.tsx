@@ -24,6 +24,7 @@ export function DigestEmail({
   kevWindowDays = 7,
   products: productMap,
 }: DigestEmailProps) {
+  // For the summary narrative, highlight all known product names.
   const productNames = new Set(curation.curated.map((c) => c.product));
   if (productMap) {
     for (const info of Object.values(productMap)) {
@@ -48,12 +49,12 @@ export function DigestEmail({
             entries={kevs}
             glyphBaseUrl={glyphBaseUrl}
             windowDays={kevWindowDays}
-            products={productNames}
+            products={productMap}
           />
           <CveSection
             curated={curation.curated}
             glyphBaseUrl={glyphBaseUrl}
-            products={productNames}
+            products={productMap}
           />
           <Footer />
         </Container>

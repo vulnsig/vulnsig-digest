@@ -43,8 +43,8 @@ const tagline: React.CSSProperties = {
 
 const digest: React.CSSProperties = {
   color: colors.zinc500,
-  fontFamily: fonts.mono,
-  fontSize: 11,
+  fontFamily: fonts.sans,
+  fontSize: 12,
   margin: `${spacing.sm}px 0 0`,
-  letterSpacing: "0.08em",
+  // letterSpacing: "0.08em",
 };

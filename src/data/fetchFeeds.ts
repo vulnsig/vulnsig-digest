@@ -50,7 +50,7 @@ export async function fetchDigestData(
   return {
     cves: selectWithinWindow(cveFeed.cves, cveCutoff, config.cveMaxCount),
     kevs: selectWithinWindow(kevFeed.cves, kevCutoff, config.kevMaxCount),
-    products: { ...kevFeed.products, ...cveFeed.products },
+    products: { ...kevFeed.products, ...cveFeed.products }, // CVE might overite KEV
     generatedAt: cveFeed.generatedAt,
   };
 }
