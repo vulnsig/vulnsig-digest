@@ -8,8 +8,8 @@ async function main() {
   const cveUrl = process.env.CVE_DATA_URL;
   const kevUrl = process.env.KEV_DATA_URL;
   const postmarkToken = process.env.POSTMARK_SERVER_TOKEN;
-  const from = process.env.FROM_EMAIL;
-  const recipients = (process.env.RECIPIENTS ?? "")
+  const from = process.env.DIGEST_FROM_EMAIL;
+  const recipients = (process.env.DIGEST_TO_EMAILS ?? "")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
