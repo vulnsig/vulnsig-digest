@@ -25,5 +25,5 @@ const badge: React.CSSProperties = {
   display: "inline-block",
   margin: 0,
   lineHeight: "18px",
-  letterSpacing: "0.04em",
+  // letterSpacing: "0.04em",
 };

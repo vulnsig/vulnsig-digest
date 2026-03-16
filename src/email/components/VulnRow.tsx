@@ -41,7 +41,7 @@ export function VulnRow({
   children,
 }: VulnRowProps) {
   const imgSrc = glyphUrl(entry, glyphBaseUrl, 100, 144);
-  const altText = `VulnSig glyph for ${entry.id} — CVSS ${entry.cvss.baseScore}`;
+  const altText = `VulnSig glyph for CVSS ${entry.cvss.baseScore}`;
   const nvdUrl = `https://nvd.nist.gov/vuln/detail/${entry.id}`;
   const dateLabel =
     variant === "cve"
@@ -66,10 +66,8 @@ export function VulnRow({
               {entry.id}
             </Link>
           </Text>
-          <SeverityBadge score={entry.cvss.baseScore} />
-          <Text style={subtitle}>
-            {dateLabel} · CVSS {entry.cvss.version}
-          </Text>
+          {/* <SeverityBadge score={entry.cvss.baseScore} /> */}
+          <Text style={subtitle}>{dateLabel}</Text>
           <Text style={description}>
             {products?.[entry.id]?.product ? (
               <HighlightProducts
@@ -124,7 +122,7 @@ const subtitle: React.CSSProperties = {
   fontSize: 11,
   color: colors.zinc500,
   margin: `${spacing.xs}px 0 0`,
-  letterSpacing: "0.02em",
+  // letterSpacing: "0.02em",
 };
 
 const description: React.CSSProperties = {

@@ -9,7 +9,7 @@ export function scoreBadgeBg(score: number): string {
 
 export function scoreBadgeTextColor(score: number): string {
   const { light } = scoreToHue(score);
-  return 52 * light > 50 ? "#000000" : "#ffffff";
+  return 52 * light > 50 ? "#000" : "#fff";
 }
 
 // Zinc dark palette — mirrors vulnsig-www

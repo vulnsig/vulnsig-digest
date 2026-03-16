@@ -14,8 +14,8 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const cveUrl = requireEnv("CVE_DATA_URL");
   const kevUrl = requireEnv("KEV_DATA_URL");
   const postmarkToken = requireEnv("POSTMARK_SERVER_TOKEN");
-  const from = requireEnv("FROM_EMAIL");
-  const recipients = requireEnv("RECIPIENTS")
+  const from = requireEnv("DIGEST_FROM_EMAIL");
+  const recipients = requireEnv("DIGEST_TO_EMAILS")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);

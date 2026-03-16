@@ -1,4 +1,4 @@
-import { Heading, Link, Section, Text } from "@react-email/components";
+import { Heading, Section, Text } from "@react-email/components";
 import type { CuratedCve, ProductInfo } from "../../data/types.js";
 import { colors, fonts, spacing } from "../styles.js";
 import { VulnRow } from "./VulnRow.js";
@@ -38,12 +38,7 @@ export function CveSection({
                 {group.related.map((r, i) => (
                   <span key={r.id}>
                     {i > 0 && ", "}
-                    <Link
-                      href={`https://nvd.nist.gov/vuln/detail/${r.id}`}
-                      style={relatedLink}
-                    >
-                      {r.id}
-                    </Link>
+                    {r.id}
                   </span>
                 ))}
               </Text>
@@ -86,9 +81,4 @@ const relatedNote: React.CSSProperties = {
   color: colors.zinc500,
   lineHeight: "19px",
   margin: `${spacing.xs}px 0 0`,
-};
-
-const relatedLink: React.CSSProperties = {
-  color: colors.zinc400,
-  textDecoration: "none",
 };

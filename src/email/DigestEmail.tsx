@@ -31,7 +31,7 @@ export function DigestEmail({
       productNames.add(info.product);
     }
   }
-  const previewText = `${curation.curated.length} products from ${curation.totalCvesInFeed} CVEs, ${kevs.length} KEV additions — ${date}`;
+  const previewText = `VulnSig Digest: ${date}`;
 
   return (
     <Html>
