@@ -1,4 +1,4 @@
-import type { CveDataset, CveEntry } from "./types.js";
+import type { CveDataset, CveEntry, ProductInfo } from "./types.js";
 import { config } from "../config.js";
 
 export async function fetchFeed(url: string): Promise<CveDataset> {
@@ -26,6 +26,7 @@ export function selectWithinWindow(
 export interface DigestData {
   cves: CveEntry[];
   kevs: CveEntry[];
+  products: Record<string, ProductInfo>;
   generatedAt: string;
 }
 
@@ -47,6 +48,7 @@ export async function fetchDigestData(
   return {
     cves: selectWithinWindow(cveFeed.cves, cveCutoff, config.cveMaxCount),
     kevs: selectWithinWindow(kevFeed.cves, kevCutoff, config.kevMaxCount),
+    products: cveFeed.products,
     generatedAt: cveFeed.generatedAt,
   };
 }

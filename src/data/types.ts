@@ -9,11 +9,17 @@ export interface CveEntry {
   };
 }
 
+export interface ProductInfo {
+  product: string;
+  added: string;
+}
+
 export interface CveDataset {
   generatedAt: string;
   windowStart: string;
   windowEnd: string;
   cves: CveEntry[];
+  products: Record<string, ProductInfo>;
 }
 
 export type SeverityLevel = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | "NONE";

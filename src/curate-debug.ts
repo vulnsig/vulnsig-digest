@@ -3,7 +3,6 @@ import { writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fetchDigestData } from "./data/fetchFeeds.js";
-import { extractProducts } from "./curation/extractProducts.js";
 import { groupAndSelect } from "./curation/groupAndSelect.js";
 import { generateSummary } from "./curation/generateSummary.js";
 import { config } from "./config.js";
@@ -24,8 +23,11 @@ const data = await fetchDigestData(
 console.log(`  CVEs in window: ${data.cves.length}`);
 console.log(`  KEVs in window: ${data.kevs.length}`);
 
-console.log("\n━━━ Step 1: Extract products ━━━");
-const annotated = await extractProducts(data.cves);
+console.log("\n━━━ Step 1: Annotate products ━━━");
+const annotated = data.cves.map((cve) => ({
+  ...cve,
+  product: data.products[cve.id]?.product ?? "Unknown",
+}));
 const unknownCount = annotated.filter((e) => e.product === "Unknown").length;
 console.log(`  Unknown: ${unknownCount}/${annotated.length}`);
 console.log("  Annotations:");

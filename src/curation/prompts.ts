@@ -1,24 +1,5 @@
 import type { CuratedCve } from "../data/types.js";
 
-export const EXTRACTION_SYSTEM_PROMPT = `You are a CVE analyst. For each CVE provided, extract the primary software product or tool that the vulnerability affects. Return exactly 1 to 2 words representing the most commonly recognized name for that product.
-
-Normalize variations to a single canonical name. For example:
-- "Apache HTTP Server", "httpd", "Apache httpd 2.4.x" → "Apache httpd"
-- "Google Chromium", "Chrome browser" → "Chrome"
-- "Microsoft Windows Win32k" → "Windows"
-- "OpenSSL libssl" → "OpenSSL"
-
-If the CVE description does not clearly identify a specific product (e.g., it describes a generic protocol issue or a vulnerability in an unnamed library), return "Unknown".
-
-Respond with JSON only. No preamble, no markdown fences:
-[{ "id": "CVE-2026-XXXXX", "product": "Product Name" }, ...]`;
-
-export function buildExtractionUserPrompt(
-  batch: Array<{ id: string; description: string }>,
-): string {
-  return JSON.stringify(batch, null, 2);
-}
-
 // export const SUMMARY_SYSTEM_PROMPT = `You are the editor of a daily vulnerability newsletter email called VulnSig Digest. Your audience is security professionals who scan this email over morning coffee.
 
 // Write 1 to 2 concise paragraphs summarizing today's most notable vulnerabilities. Highlight:

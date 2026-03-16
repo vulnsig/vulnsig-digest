@@ -34,7 +34,7 @@ async function main() {
   console.log(`CVEs: ${data.cves.length} raw, KEVs: ${data.kevs.length}`);
 
   console.log("Curating CVEs...");
-  const curation = await curateCves(data.cves);
+  const curation = await curateCves(data.cves, data.products);
   console.log(
     `Curated: ${curation.curated.length} products from ${curation.totalProductsFound} found` +
       (curation.curatedWithLlm ? "" : " (fallback)"),

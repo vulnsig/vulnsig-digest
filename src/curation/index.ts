@@ -1,30 +1,34 @@
-import { extractProducts } from "./extractProducts.js";
 import { groupAndSelect } from "./groupAndSelect.js";
 import { generateSummary } from "./generateSummary.js";
 import { fallbackCuration } from "./fallback.js";
 import { config } from "../config.js";
-import type { CveEntry, CurationResult } from "../data/types.js";
+import type { CveEntry, CurationResult, ProductInfo } from "../data/types.js";
 
-export async function curateCves(cves: CveEntry[]): Promise<CurationResult> {
+export async function curateCves(
+  cves: CveEntry[],
+  products: Record<string, ProductInfo>,
+): Promise<CurationResult> {
   const totalCvesInFeed = cves.length;
 
-  // Step 1: Extract product names
-  let annotated: Array<CveEntry & { product: string }>;
-  try {
-    annotated = await extractProducts(cves);
-  } catch (err) {
-    console.error("Product extraction failed entirely, using fallback:", err);
+  // Annotate CVEs with product names from the feed
+  const annotated = cves.map((cve) => ({
+    ...cve,
+    product: products[cve.id]?.product ?? "Unknown",
+  }));
+
+  if (annotated.every((a) => a.product === "Unknown")) {
+    console.warn("No product mappings found, using fallback");
     return fallbackCuration(cves);
   }
 
-  // Step 2: Group and select top 20
+  // Group and select
   const { curated, totalProductsFound } = groupAndSelect(
     annotated,
     config.curation.cap,
     config.curation.diversityCap,
   );
 
-  // Step 3: Generate editorial summary
+  // Generate editorial summary
   let summary = "";
   try {
     summary = await generateSummary(curated, totalCvesInFeed);
