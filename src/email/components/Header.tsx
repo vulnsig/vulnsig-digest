@@ -12,7 +12,7 @@ export function Header({ date }: HeaderProps) {
         VulnSig
       </Heading>
       {/* <Text style={tagline}>more than a score</Text> */}
-      <Text style={digest}>Daily Digest · {date}</Text>
+      <Text style={digest}>VulnSig Digest · {date}</Text>
     </Section>
   );
 }
