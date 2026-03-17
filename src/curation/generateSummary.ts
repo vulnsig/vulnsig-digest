@@ -9,21 +9,12 @@ export async function generateSummary(
   const client = new Anthropic();
   const userPrompt = buildSummaryUserPrompt(curated, totalCvesInFeed);
 
-  const attempt = () =>
-    client.messages.create({
-      model: "claude-opus-4-6",
-      max_tokens: 1024,
-      system: SUMMARY_SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userPrompt }],
-    });
-
-  let response;
-  try {
-    response = await attempt();
-  } catch {
-    await new Promise((r) => setTimeout(r, 2000));
-    response = await attempt(); // throws on second failure — caught by caller
-  }
+  const response = await client.messages.create({
+    model: "claude-opus-4-6",
+    max_tokens: 1024,
+    system: SUMMARY_SYSTEM_PROMPT,
+    messages: [{ role: "user", content: userPrompt }],
+  });
 
   let text =
     response.content[0]?.type === "text" ? response.content[0].text : "";

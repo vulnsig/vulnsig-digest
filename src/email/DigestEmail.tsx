@@ -31,7 +31,9 @@ export function DigestEmail({
       productNames.add(info.product);
     }
   }
-  const previewText = `VulnSig Digest: ${date}`;
+  const cvePart = `${curation.curated.length} new CVE${curation.curated.length !== 1 ? "s" : ""}`;
+  const kevPart = kevs.length > 0 ? ` and ${kevs.length} KEV${kevs.length !== 1 ? "s" : ""}` : "";
+  const previewText = `Details on ${cvePart}${kevPart}`;
 
   return (
     <Html>

@@ -11,7 +11,7 @@ export function Header({ date }: HeaderProps) {
       <Heading as="h1" style={title}>
         VulnSig
       </Heading>
-      <Text style={tagline}>more than a score</Text>
+      {/* <Text style={tagline}>more than a score</Text> */}
       <Text style={digest}>Daily Digest · {date}</Text>
     </Section>
   );
@@ -33,13 +33,13 @@ const title: React.CSSProperties = {
   margin: 0,
 };
 
-const tagline: React.CSSProperties = {
-  color: colors.zinc500,
-  fontFamily: fonts.sans,
-  fontSize: 13,
-  fontStyle: "italic",
-  margin: `${spacing.xs}px 0 0`,
-};
+// const tagline: React.CSSProperties = {
+//   color: colors.zinc500,
+//   fontFamily: fonts.sans,
+//   fontSize: 13,
+//   fontStyle: "italic",
+//   margin: `${spacing.xs}px 0 0`,
+// };
 
 const digest: React.CSSProperties = {
   color: colors.zinc500,
