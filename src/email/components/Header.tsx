@@ -1,4 +1,4 @@
-import { Heading, Section, Text } from "@react-email/components";
+import { Heading, Link, Section, Text } from "@react-email/components";
 import { colors, fonts, spacing } from "../styles.js";
 
 interface HeaderProps {
@@ -9,7 +9,9 @@ export function Header({ date }: HeaderProps) {
   return (
     <Section style={container}>
       <Heading as="h1" style={title}>
-        VulnSig
+        <Link href="https://vulnsig.io" style={titleLink}>
+          VulnSig
+        </Link>
       </Heading>
       {/* <Text style={tagline}>more than a score</Text> */}
       <Text style={digest}>VulnSig Digest · {date}</Text>
@@ -25,12 +27,16 @@ const container: React.CSSProperties = {
 };
 
 const title: React.CSSProperties = {
-  color: colors.zinc300,
   fontFamily: fonts.sans,
   fontSize: 28,
   fontWeight: 700,
   letterSpacing: "0.05em",
   margin: 0,
+};
+
+const titleLink: React.CSSProperties = {
+  color: colors.zinc300,
+  textDecoration: "none",
 };
 
 // const tagline: React.CSSProperties = {
