@@ -42,6 +42,7 @@ const muted: React.CSSProperties = {
   fontSize: 11,
   color: colors.zinc500,
   margin: `${spacing.sm}px 0 0`,
+  lineHeight: "17px",
 };
 
 const unsubscribeLink: React.CSSProperties = {
