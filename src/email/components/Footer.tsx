@@ -10,7 +10,10 @@ export function Footer() {
         </Link>
       </Text>
       <Text style={muted}>
-        You are receiving this because you subscribed to the VulnSig Digest.
+        You are receiving this because you subscribed to the VulnSig Digest.{" "}
+        <Link href="{{UNSUBSCRIBE_URL}}" style={unsubscribeLink}>
+          Unsubscribe
+        </Link>
       </Text>
     </Section>
   );
@@ -39,4 +42,9 @@ const muted: React.CSSProperties = {
   fontSize: 11,
   color: colors.zinc500,
   margin: `${spacing.sm}px 0 0`,
+};
+
+const unsubscribeLink: React.CSSProperties = {
+  color: colors.zinc500,
+  textDecoration: "underline",
 };
