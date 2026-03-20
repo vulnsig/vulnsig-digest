@@ -11,7 +11,6 @@ export interface SendOptions {
   postmarkToken: string;
   from: string;
   subscribers: Subscriber[];
-  unsubscribeBaseUrl: string;
   props: DigestEmailProps;
 }
 
@@ -19,7 +18,6 @@ export async function sendDigest({
   postmarkToken,
   from,
   subscribers,
-  unsubscribeBaseUrl,
   props,
 }: SendOptions) {
   const client = new ServerClient(postmarkToken);
@@ -28,7 +26,7 @@ export async function sendDigest({
 
   const results = await Promise.allSettled(
     subscribers.map((subscriber) => {
-      const unsubscribeUrl = `${unsubscribeBaseUrl}unsubscribe?token=${subscriber.unsubscribeToken}`;
+      const unsubscribeUrl = `https://vulnsig.io/unsubscribe?token=${subscriber.unsubscribeToken}`;
       const personalizedHtml = html.replace(
         /\{\{UNSUBSCRIBE_URL\}\}/g,
         unsubscribeUrl,

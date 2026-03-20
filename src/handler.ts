@@ -57,7 +57,6 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
     postmarkToken,
     from,
     subscribers,
-    unsubscribeBaseUrl: subscribersUrl,
     props: {
       date,
       curation,
