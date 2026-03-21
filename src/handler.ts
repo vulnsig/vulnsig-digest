@@ -15,7 +15,7 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const kevUrl = requireEnv("KEV_DATA_URL");
   const postmarkToken = requireEnv("POSTMARK_SERVER_TOKEN");
   const from = requireEnv("DIGEST_FROM_EMAIL");
-  const subscribersUrl = requireEnv("SUBSCRIBERS_API_URL");
+  const subscribersUrl = requireEnv("SUBSCRIBERS_API_URL"); // includes trailing slash
   const apiSecret = requireEnv("API_SECRET");
 
   console.log("Fetching subscribers...");
