@@ -16,9 +16,12 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const postmarkToken = requireEnv("POSTMARK_SERVER_TOKEN");
   const from = requireEnv("DIGEST_FROM_EMAIL");
   const subscribersUrl = requireEnv("SUBSCRIBERS_API_URL");
+  const apiSecret = requireEnv("API_SECRET");
 
   console.log("Fetching subscribers...");
-  const subscribersResp = await fetch(`${subscribersUrl}subscribers`);
+  const subscribersResp = await fetch(`${subscribersUrl}subscribers`, {
+    headers: { "x-api-key": apiSecret },
+  });
   if (!subscribersResp.ok) {
     throw new Error(`Failed to fetch subscribers: ${subscribersResp.status}`);
   }
