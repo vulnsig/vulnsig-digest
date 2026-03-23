@@ -65,7 +65,7 @@ export function VulnRow({
           <Text style={cveIdStyle}>
             <Link href={nvdUrl} style={cveLink}>
               {entry.id}
-            </Link>{" "}
+            </Link>
             <Link href={vulnsigUrl} style={vulnsigLink}>
               ⚙️
             </Link>
@@ -124,6 +124,7 @@ const cveLink: React.CSSProperties = {
 const vulnsigLink: React.CSSProperties = {
   textDecoration: "none",
   fontSize: 11,
+  marginLeft: 12,
 };
 
 const subtitle: React.CSSProperties = {
