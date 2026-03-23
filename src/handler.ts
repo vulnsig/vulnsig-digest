@@ -15,14 +15,23 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const kevUrl = requireEnv("KEV_DATA_URL");
   const postmarkToken = requireEnv("POSTMARK_SERVER_TOKEN");
   const from = requireEnv("DIGEST_FROM_EMAIL");
-  const recipients = requireEnv("DIGEST_TO_EMAILS")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-  if (recipients.length === 0) {
-    console.warn("No recipients configured, skipping send");
+  const subscribersUrl = requireEnv("SUBSCRIBERS_API_URL"); // includes trailing slash
+  const apiSecret = requireEnv("API_SECRET");
+
+  console.log("Fetching subscribers...");
+  const subscribersResp = await fetch(`${subscribersUrl}subscribers`, {
+    headers: { "x-api-key": apiSecret },
+  });
+  if (!subscribersResp.ok) {
+    throw new Error(`Failed to fetch subscribers: ${subscribersResp.status}`);
+  }
+  const subscribers: Array<{ email: string; unsubscribeToken: string }> =
+    await subscribersResp.json();
+  if (subscribers.length === 0) {
+    console.warn("No confirmed subscribers, skipping send");
     return;
   }
+  console.log(`Found ${subscribers.length} subscriber(s)`);
 
   console.log("Fetching CVE and KEV feeds...");
   const data = await fetchDigestData(
@@ -50,7 +59,7 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const result = await sendDigest({
     postmarkToken,
     from,
-    recipients,
+    subscribers,
     props: {
       date,
       curation,

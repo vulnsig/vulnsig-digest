@@ -53,7 +53,7 @@ jobs:
         checks:
           - { name: "Format", command: "npm run format:check" }
           - { name: "Lint", command: "npm run lint" }
-          - { name: "Build", command: "npm run build" }
+          - { name: "Bundle", command: "npm run bundle" }
 
     runs-on: ubuntu-22.04
 

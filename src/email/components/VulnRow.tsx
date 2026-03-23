@@ -2,7 +2,7 @@ import { Column, Img, Link, Row, Section, Text } from "@react-email/components";
 import type { CveEntry, ProductInfo } from "../../data/types.js";
 import { glyphUrl } from "../../data/glyph.js";
 import { colors, fonts, spacing, truncate } from "../styles.js";
-import { SeverityBadge } from "./SeverityBadge.js";
+// import { SeverityBadge } from "./SeverityBadge.js";
 import { HighlightProducts } from "./HighlightProducts.js";
 
 interface VulnRowProps {

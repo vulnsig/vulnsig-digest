@@ -2,17 +2,22 @@ import { ServerClient } from "postmark";
 import { render } from "@react-email/render";
 import { DigestEmail, type DigestEmailProps } from "../email/DigestEmail.js";
 
+export interface Subscriber {
+  email: string;
+  unsubscribeToken: string;
+}
+
 export interface SendOptions {
   postmarkToken: string;
   from: string;
-  recipients: string[];
+  subscribers: Subscriber[];
   props: DigestEmailProps;
 }
 
 export async function sendDigest({
   postmarkToken,
   from,
-  recipients,
+  subscribers,
   props,
 }: SendOptions) {
   const client = new ServerClient(postmarkToken);
@@ -20,21 +25,26 @@ export async function sendDigest({
   const subject = `VulnSig Digest: ${props.date}`;
 
   const results = await Promise.allSettled(
-    recipients.map((to) =>
-      client.sendEmail({
+    subscribers.map((subscriber) => {
+      const unsubscribeUrl = `https://vulnsig.io/unsubscribe?token=${subscriber.unsubscribeToken}`;
+      const personalizedHtml = html.replace(
+        /\{\{UNSUBSCRIBE_URL\}\}/g,
+        unsubscribeUrl,
+      );
+      return client.sendEmail({
         From: from,
-        To: to,
+        To: subscriber.email,
         Subject: subject,
-        HtmlBody: html,
+        HtmlBody: personalizedHtml,
         MessageStream: "broadcast",
-      }),
-    ),
+      });
+    }),
   );
 
   const failures = results.filter((r) => r.status === "rejected");
   if (failures.length > 0) {
     console.error(
-      `Failed to send to ${failures.length}/${recipients.length} recipients`,
+      `Failed to send to ${failures.length}/${subscribers.length} recipients`,
     );
     for (const f of failures) {
       console.error((f as PromiseRejectedResult).reason);
@@ -42,7 +52,7 @@ export async function sendDigest({
   }
 
   return {
-    total: recipients.length,
+    total: subscribers.length,
     sent: results.filter((r) => r.status === "fulfilled").length,
     failed: failures.length,
   };
