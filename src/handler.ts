@@ -1,7 +1,10 @@
 import type { ScheduledEvent } from "aws-lambda";
+import { render } from "@react-email/render";
 import { fetchDigestData } from "./data/fetchFeeds.js";
 import { curateCves } from "./curation/index.js";
+import { DigestEmail } from "./email/DigestEmail.js";
 import { sendDigest } from "./send/postmark.js";
+import { publishLatestDigest } from "./publish/s3.js";
 import { config } from "./config.js";
 
 function requireEnv(name: string): string {
@@ -56,19 +59,24 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
     day: "numeric",
   });
 
-  const result = await sendDigest({
-    postmarkToken,
-    from,
-    subscribers,
-    props: {
+  console.log("Rendering email...");
+  const html = await render(
+    DigestEmail({
       date,
       curation,
       kevs: data.kevs,
       glyphBaseUrl: config.glyphBaseUrl,
       kevWindowDays: config.kevWindowDays,
       products: data.products,
-    },
-  });
+    }),
+  );
+  const subject = `VulnSig Digest: ${date}`;
+
+  const digestBucket = requireEnv("DIGEST_S3_BUCKET");
+  const [result] = await Promise.all([
+    sendDigest({ postmarkToken, from, subscribers, subject, html }),
+    publishLatestDigest(digestBucket, html),
+  ]);
 
   console.log(`Sent: ${result.sent}/${result.total}, Failed: ${result.failed}`);
 }

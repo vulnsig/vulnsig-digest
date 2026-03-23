@@ -1,6 +1,4 @@
 import { ServerClient } from "postmark";
-import { render } from "@react-email/render";
-import { DigestEmail, type DigestEmailProps } from "../email/DigestEmail.js";
 
 export interface Subscriber {
   email: string;
@@ -11,18 +9,18 @@ export interface SendOptions {
   postmarkToken: string;
   from: string;
   subscribers: Subscriber[];
-  props: DigestEmailProps;
+  subject: string;
+  html: string; // pre-rendered, with {{UNSUBSCRIBE_URL}} placeholder
 }
 
 export async function sendDigest({
   postmarkToken,
   from,
   subscribers,
-  props,
+  subject,
+  html,
 }: SendOptions) {
   const client = new ServerClient(postmarkToken);
-  const html = await render(DigestEmail(props));
-  const subject = `VulnSig Digest: ${props.date}`;
 
   const results = await Promise.allSettled(
     subscribers.map((subscriber) => {
