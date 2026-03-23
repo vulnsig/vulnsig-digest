@@ -43,6 +43,7 @@ export function VulnRow({
   const imgSrc = glyphUrl(entry, glyphBaseUrl, 100, 144);
   const altText = `VulnSig glyph for CVSS ${entry.cvss.baseScore}`;
   const nvdUrl = `https://nvd.nist.gov/vuln/detail/${entry.id}`;
+  const vulnsigUrl = `https://vulnsig.io/cve/${entry.id}`;
   const dateLabel =
     variant === "cve"
       ? formatDateTime(entry.published)
@@ -64,6 +65,9 @@ export function VulnRow({
           <Text style={cveIdStyle}>
             <Link href={nvdUrl} style={cveLink}>
               {entry.id}
+            </Link>{" "}
+            <Link href={vulnsigUrl} style={vulnsigLink}>
+              ⚙️
             </Link>
           </Text>
           {/* <SeverityBadge score={entry.cvss.baseScore} /> */}
@@ -115,6 +119,11 @@ const cveIdStyle: React.CSSProperties = {
 const cveLink: React.CSSProperties = {
   color: colors.zinc300,
   textDecoration: "none",
+};
+
+const vulnsigLink: React.CSSProperties = {
+  textDecoration: "none",
+  fontSize: 11,
 };
 
 const subtitle: React.CSSProperties = {
