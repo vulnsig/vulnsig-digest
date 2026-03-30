@@ -46,7 +46,7 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   console.log(`CVEs: ${data.cves.length} raw, KEVs: ${data.kevs.length}`);
 
   console.log("Curating CVEs...");
-  const curation = await curateCves(data.cves, data.products);
+  const curation = await curateCves(data.cves, data.products, data.prevSummary);
   console.log(
     `Curated: ${curation.curated.length} products from ${curation.totalProductsFound} found` +
       (curation.curatedWithLlm ? "" : " (fallback)"),
@@ -75,7 +75,7 @@ export async function handler(_event: ScheduledEvent): Promise<void> {
   const digestBucket = requireEnv("DIGEST_S3_BUCKET");
   const [result] = await Promise.all([
     sendDigest({ postmarkToken, from, subscribers, subject, html }),
-    publishLatestDigest(digestBucket, html),
+    publishLatestDigest(digestBucket, html, curation.summary),
   ]);
 
   console.log(`Sent: ${result.sent}/${result.total}, Failed: ${result.failed}`);

@@ -7,6 +7,7 @@ import type { CveEntry, CurationResult, ProductInfo } from "../data/types.js";
 export async function curateCves(
   cves: CveEntry[],
   products: Record<string, ProductInfo>,
+  prevSummary = "",
 ): Promise<CurationResult> {
   const totalCvesInFeed = cves.length;
 
@@ -31,7 +32,7 @@ export async function curateCves(
   // Generate editorial summary
   let summary = "";
   try {
-    summary = await generateSummary(curated, totalCvesInFeed);
+    summary = await generateSummary(curated, totalCvesInFeed, prevSummary);
   } catch (err) {
     console.error("Summary generation failed, sending without summary:", err);
   }

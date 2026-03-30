@@ -5,9 +5,14 @@ import { SUMMARY_SYSTEM_PROMPT, buildSummaryUserPrompt } from "./prompts.js";
 export async function generateSummary(
   curated: CuratedCve[],
   totalCvesInFeed: number,
+  prevSummary = "",
 ): Promise<string> {
   const client = new Anthropic();
-  const userPrompt = buildSummaryUserPrompt(curated, totalCvesInFeed);
+  const userPrompt = buildSummaryUserPrompt(
+    curated,
+    totalCvesInFeed,
+    prevSummary,
+  );
 
   const response = await client.messages.create({
     model: "claude-opus-4-6",

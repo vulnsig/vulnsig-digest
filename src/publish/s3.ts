@@ -10,14 +10,26 @@ function stripUnsubscribeLink(html: string): string {
 export async function publishLatestDigest(
   bucket: string,
   html: string,
+  summary: string,
 ): Promise<void> {
-  await s3.send(
-    new PutObjectCommand({
-      Bucket: bucket,
-      Key: "digest/latest.html",
-      Body: stripUnsubscribeLink(html),
-      ContentType: "text/html; charset=utf-8",
-      CacheControl: "no-cache, no-store, must-revalidate",
-    }),
-  );
+  await Promise.all([
+    s3.send(
+      new PutObjectCommand({
+        Bucket: bucket,
+        Key: "digest/latest.html",
+        Body: stripUnsubscribeLink(html),
+        ContentType: "text/html; charset=utf-8",
+        CacheControl: "no-cache, no-store, must-revalidate",
+      }),
+    ),
+    s3.send(
+      new PutObjectCommand({
+        Bucket: bucket,
+        Key: "digest/summary.txt",
+        Body: summary,
+        ContentType: "text/plain; charset=utf-8",
+        CacheControl: "no-cache, no-store, must-revalidate",
+      }),
+    ),
+  ]);
 }

@@ -22,6 +22,9 @@ const data = await fetchDigestData(
 );
 console.log(`  CVEs in window: ${data.cves.length}`);
 console.log(`  KEVs in window: ${data.kevs.length}`);
+console.log(
+  `  Prev summary: ${data.prevSummary ? `${data.prevSummary.length} chars` : "none"}`,
+);
 
 console.log("\n━━━ Step 1: Load annotations ━━━");
 const annotated = data.cves.map((cve) => ({
@@ -56,7 +59,11 @@ for (const g of curated) {
 }
 
 console.log("\n━━━ Step 3: Summary ━━━");
-const summary = await generateSummary(curated, data.cves.length);
+const summary = await generateSummary(
+  curated,
+  data.cves.length,
+  data.prevSummary,
+);
 console.log(summary);
 
 // Write snapshot for preview/dev.tsx

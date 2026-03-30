@@ -28,6 +28,7 @@ export interface DigestData {
   kevs: CveEntry[];
   products: Record<string, ProductInfo>;
   generatedAt: string;
+  prevSummary: string;
 }
 
 export async function fetchDigestData(
@@ -36,9 +37,14 @@ export async function fetchDigestData(
   cveWindowHours = 24,
   kevWindowDays = 7,
 ): Promise<DigestData> {
-  const [cveFeed, kevFeed] = await Promise.all([
+  const prevSummaryUrl = new URL("/digest/summary.txt", cveUrl).href;
+
+  const [cveFeed, kevFeed, prevSummary] = await Promise.all([
     fetchFeed(cveUrl),
     fetchFeed(kevUrl),
+    fetch(prevSummaryUrl)
+      .then((r) => (r.ok ? r.text() : ""))
+      .catch(() => ""),
   ]);
 
   const now = Date.now();
@@ -50,5 +56,6 @@ export async function fetchDigestData(
     kevs: selectWithinWindow(kevFeed.cves, kevCutoff, config.kevMaxCount),
     products: { ...kevFeed.products, ...cveFeed.products }, // CVE might overite KEV
     generatedAt: cveFeed.generatedAt,
+    prevSummary,
   };
 }

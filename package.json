@@ -7,7 +7,6 @@
     "dev": "email dev -d preview -p 3000",
     "bundle": "esbuild src/handler.ts --bundle --platform=node --target=node22 --format=cjs --jsx=automatic --external:@aws-sdk/client-s3 --outfile=dist/handler.js",
     "curate": "tsx src/curate-debug.ts",
-    "send": "tsx src/send-test.ts",
     "test": "vitest run",
     "lint": "eslint . && tsc --noEmit",
     "format": "prettier --write .",
