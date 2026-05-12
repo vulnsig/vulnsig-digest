@@ -16,7 +16,7 @@ const highlightBright: React.CSSProperties = {
 };
 
 const highlightSubtle: React.CSSProperties = {
-  color: colors.gray400,
+  color: colors.gray500,
   fontWeight: 600,
 };
 
