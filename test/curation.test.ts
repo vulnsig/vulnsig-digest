@@ -127,14 +127,15 @@ describe("groupAndSelect", () => {
     expect(curated.map((c) => c.product)).toEqual(["Beta", "Gamma", "Alpha"]);
   });
 
-  it("treats 'Unknown' as a normal group", () => {
+  it("filters out 'Unknown' products", () => {
     const input = [
       makeCve("CVE-001", "Unknown", 8.0),
       makeCve("CVE-002", "Unknown", 6.0),
+      makeCve("CVE-003", "RealProduct", 7.0),
     ];
     const { curated, totalProductsFound } = groupAndSelect(input);
     expect(curated).toHaveLength(1);
-    expect(curated[0].product).toBe("Unknown");
+    expect(curated[0].product).toBe("RealProduct");
     expect(totalProductsFound).toBe(1);
   });
 

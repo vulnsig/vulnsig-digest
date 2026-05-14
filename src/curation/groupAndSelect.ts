@@ -13,9 +13,11 @@ export function groupAndSelect(
   cap = 10,
   diversityCap = 10,
 ): { curated: CuratedCve[]; totalProductsFound: number } {
+  const identified = annotated.filter((cve) => cve.product !== "Unknown");
+
   // Group by normalized (lowercase) product name
   const groups = new Map<string, Annotated[]>();
-  for (const cve of annotated) {
+  for (const cve of identified) {
     const key = cve.product.toLowerCase();
     const group = groups.get(key);
     if (group) {
