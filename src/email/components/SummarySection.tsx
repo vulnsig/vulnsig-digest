@@ -15,6 +15,10 @@ export function SummarySection({
 }: SummarySectionProps) {
   if (!summary && curatedWithLlm) return null;
 
+  // console.log(
+  //   "[SummarySection] products:\n" + [...products].sort().join("\n"),
+  // );
+
   return (
     <Section style={container}>
       {curatedWithLlm && <Text style={badge}>LLM-generated summary</Text>}
@@ -25,6 +29,7 @@ export function SummarySection({
               text={para}
               products={products}
               variant="subtle"
+              linkProducts={true}
             />
           </Text>
         ))}

@@ -8,7 +8,12 @@ interface HighlightProductsProps {
   firstOnly?: boolean;
   /** Style variant: "bright" (default) for descriptions, "subtle" for summary. */
   variant?: "bright" | "subtle";
+  /** When true, each highlighted product links to vulnsig's search interface. */
+  linkProducts?: boolean;
 }
+
+/** Base URL for vulnsig's product search; the product name is appended as `q`. */
+const SEARCH_BASE = "https://vulnsig.io/?tab=search";
 
 const highlightBright: React.CSSProperties = {
   color: colors.zinc300,
@@ -29,13 +34,20 @@ export function HighlightProducts({
   products,
   firstOnly,
   variant = "bright",
+  linkProducts,
 }: HighlightProductsProps) {
   if (products.size === 0) return <>{text}</>;
 
-  // Build a single regex that matches any product name (longest first to avoid partial matches)
+  // Build a single regex that matches any product name (longest first to avoid partial matches).
+  // Lookarounds reject an adjacent letter/digit so we only match whole words, never mid-word
+  // substrings ("sc" in "disclosures", "team" in "Steam"). An apostrophe is not [A-Za-z0-9], so
+  // a possessive like "OpenOlat's" still matches its root "OpenOlat".
   const sorted = [...products].sort((a, b) => b.length - a.length);
   const escaped = sorted.map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-  const pattern = new RegExp(`(${escaped.join("|")})`, "gi");
+  const pattern = new RegExp(
+    `(?<![A-Za-z0-9])(${escaped.join("|")})(?![A-Za-z0-9])`,
+    "gi",
+  );
 
   const parts = text.split(pattern);
   if (parts.length === 1) return <>{text}</>;
@@ -52,11 +64,21 @@ export function HighlightProducts({
             return <React.Fragment key={i}>{part}</React.Fragment>;
           }
           seen?.add(key);
+          const style =
+            variant === "bright" ? highlightBright : highlightSubtle;
+          if (linkProducts) {
+            return (
+              <a
+                key={i}
+                href={`${SEARCH_BASE}&q=${encodeURIComponent(part)}`}
+                style={{ ...style, textDecoration: "none", cursor: "pointer" }}
+              >
+                {part}
+              </a>
+            );
+          }
           return (
-            <span
-              key={i}
-              style={variant === "bright" ? highlightBright : highlightSubtle}
-            >
+            <span key={i} style={style}>
               {part}
             </span>
           );
