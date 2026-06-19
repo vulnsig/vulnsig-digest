@@ -1,5 +1,5 @@
 # vulnsig-digest
 
 Daily email digest of vulnerabilities
-Sighn up here:
+Sign up here:
 https://vulnsig.io/?tab=subscribe
