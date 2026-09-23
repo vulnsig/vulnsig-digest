@@ -15,7 +15,7 @@ export async function generateSummary(
   );
 
   const response = await client.messages.create({
-    model: "claude-opus-4-6",
+    model: "claude-opus-5-5",
     max_tokens: 1024,
     system: SUMMARY_SYSTEM_PROMPT,
     messages: [{ role: "user", content: userPrompt }],
